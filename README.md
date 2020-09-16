@@ -7,6 +7,7 @@ Azure module to generate a [Container instances](https://docs.microsoft.com/en-u
 
 | Module version | Terraform version | AzureRM version |
 |----------------|-------------------| --------------- |
+| >= 4.x.x       | 0.13.x            | >= 2.0          |
 | >= 3.x.x       | 0.12.x            | >= 2.0          |
 | >= 2.x.x       | 0.12.x            | < 2.0           |
 | <  2.x.x       | 0.11.x            | < 2.0           |
