@@ -6,7 +6,8 @@ Azure module to generate a [Container instances](https://docs.microsoft.com/en-u
 ## Version compatibility
 
 | Module version | Terraform version | AzureRM version |
-|----------------|-------------------| --------------- |
+| -------------- | ----------------- | --------------- |
+| >= 5.x.x       | 0.15.x & 1.0.x    | >= 2.0          |
 | >= 4.x.x       | 0.13.x            | >= 2.0          |
 | >= 3.x.x       | 0.12.x            | >= 2.0          |
 | >= 2.x.x       | 0.12.x            | < 2.0           |
@@ -72,6 +73,23 @@ module "aci-myapp" {
 }
 ```
 
+<!-- BEGIN_TF_DOCS -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| azurerm | >= 1.31 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_container_group.aci](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group) | resource |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -98,9 +116,7 @@ module "aci-myapp" {
 | aci\_fqdn | The FQDN of the container group derived from `dns_name_label`. |
 | aci\_id | Azure container instance group ID |
 | aci\_ip\_address | The IP address allocated to the container instance group. |
-
+<!-- END_TF_DOCS -->
 ## Related documentation
-
-Terraform resource documentation: [terraform.io/docs/providers/azurerm/r/container_group.html](https://www.terraform.io/docs/providers/azurerm/r/container_group.html)
 
 Microsoft Azure documentation: [docs.microsoft.com/en-us/azure/container-instances/container-instances-overview](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-overview)
