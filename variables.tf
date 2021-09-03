@@ -35,7 +35,7 @@ variable "name_prefix" {
   default     = ""
 }
 
-variable "custom_name" {
+variable "aci_custom_name" {
   description = "Custom Azure Container Instances group name, generated if not set"
   type        = string
   default     = ""
@@ -84,14 +84,31 @@ EOD
   default     = null
 }
 
-variable "aci_ip_address_type" {
+variable "aci_subnet_id" {
   description = <<EOD
-Specifies the ip address type of the container.
-`Public` or `Private`.
-Changing this forces a new resource to be created. If set to `Private`, `network_profile_id` also needs to be set.
+Subnet Id of the private network profile of the container.
+Mandatory when aci_ip_address_type is set to `Private`.
 EOD
   type        = string
-  default     = "Public"
+  default     = null
+}
+
+variable "aci_nic_custom_name" {
+  description = "Custom name for the container private network interface. Used when aci_ip_address_type is set to `Private`."
+  type        = string
+  default     = null
+}
+
+variable "aci_ipcfg_custom_name" {
+  description = "Custom name for the container ip configuration attached to its private network interface. Used when aci_ip_address_type is set to `Private`."
+  type        = string
+  default     = null
+}
+
+variable "aci_network_profile_custom_name" {
+  description = "Custom name for the container private network profile. Used when aci_ip_address_type is set to `Private`."
+  type        = string
+  default     = null
 }
 
 variable "aci_os_type" {
@@ -105,3 +122,16 @@ variable "aci_restart_policy" {
   type        = string
   default     = "Always"
 }
+
+variable "aci_enable_vnet_integration" {
+  description = "Allow to enable Vnet integration"
+  type        = bool
+  default     = false
+}
+
+variable "aci_dns_name_label" {
+  description = "Aci Custom Dns Name Label when ip address type is public"
+  type        = string
+  default     = null
+}
+

@@ -1,12 +1,14 @@
 resource "azurerm_container_group" "aci" {
-  name = coalesce(var.custom_name, local.aci_name)
+  name = coalesce(var.aci_custom_name, local.default_aci_name)
 
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  ip_address_type = var.aci_ip_address_type
-  dns_name_label  = coalesce(var.custom_name, local.aci_name)
-  os_type         = var.aci_os_type
+  ip_address_type    = var.aci_enable_vnet_integration ? "Private" : "Public"
+  network_profile_id = var.aci_enable_vnet_integration ? azurerm_network_profile.aci_network_profile[0].id : null
+  dns_name_label     = var.aci_enable_vnet_integration ? null : coalesce(var.aci_dns_name_label, local.default_aci_name)
+
+  os_type = var.aci_os_type
 
   restart_policy = var.aci_restart_policy
 
@@ -43,3 +45,4 @@ resource "azurerm_container_group" "aci" {
 
   tags = merge(local.default_tags, var.extra_tags)
 }
+

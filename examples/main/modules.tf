@@ -29,7 +29,7 @@ module "acr" {
   stack       = var.stack
 }
 
-module "aci_myapp" {
+module "aci" {
   source  = "claranet/aci/azurerm"
   version = "x.x.x"
 
@@ -41,12 +41,11 @@ module "aci_myapp" {
 
   resource_group_name = module.rg.resource_group_name
 
-  name_prefix        = "myapp"
   aci_restart_policy = "OnFailure"
 
   aci_containers_config = {
-    "container-hello-world" = {
-      image  = "microsoft/aci-helloworld:latest"
+    "aci" = {
+      image  = "${module.acr.login_server}/samples/nginx:latest"
       cpu    = 1
       memory = 2
 
@@ -60,6 +59,8 @@ module "aci_myapp" {
   aci_registry_credential = {
     username = module.acr.admin_username
     password = module.acr.admin_password
-    server   = module.acr.acr_fqdn
+    server   = module.acr.login_server
   }
+
 }
+
