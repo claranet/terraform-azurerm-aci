@@ -3,7 +3,8 @@
 
 Azure module to generate a [Container instances](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-overview) group.
 
-## Version compatibility
+<!-- BEGIN_TF_DOCS -->
+## Global versionning rule for Claranet Azure modules
 
 | Module version | Terraform version | AzureRM version |
 | -------------- | ----------------- | --------------- |
@@ -20,7 +21,7 @@ which set some terraform variables in the environment needed by this module.
 More details about variables set by the `terraform-wrapper` available in the [documentation](https://github.com/claranet/terraform-wrapper#environment).
 
 ```hcl
-module "azure-region" {
+module "azure_region" {
   source  = "claranet/regions/azurerm"
   version = "x.x.x"
 
@@ -31,18 +32,32 @@ module "rg" {
   source  = "claranet/rg/azurerm"
   version = "x.x.x"
 
-  location    = module.azure-region.location
+  location    = module.azure_region.location
   client_name = var.client_name
   environment = var.environment
   stack       = var.stack
 }
 
-module "aci-myapp" {
+module "acr" {
+  source  = "claranet/acr/azurerm"
+  version = "x.x.x"
+
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
+  resource_group_name = module.rg.resource_group_name
+  sku                 = "Standard"
+
+  client_name = var.client_name
+  environment = var.environment
+  stack       = var.stack
+}
+
+module "aci_myapp" {
   source  = "claranet/aci/azurerm"
   version = "x.x.x"
 
-  location       = module.azure-region.location
-  location_short = module.azure-region.location_short
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
   client_name    = var.client_name
   environment    = var.environment
   stack          = var.stack
@@ -66,14 +81,14 @@ module "aci-myapp" {
   }
 
   aci_registry_credential = {
-    username = "myregistry"
-    password = data.azurerm_key_vault_secret.acr_admin_password.value
-    server   = "myregistry.azurecr.io"
+    username = module.acr.admin_username
+    password = module.acr.admin_password
+    server   = module.acr.acr_fqdn
   }
 }
+
 ```
 
-<!-- BEGIN_TF_DOCS -->
 ## Providers
 
 | Name | Version |
