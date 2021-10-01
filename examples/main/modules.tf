@@ -41,10 +41,10 @@ module "aci" {
 
   resource_group_name = module.rg.resource_group_name
 
-  aci_restart_policy = "OnFailure"
+  restart_policy = "OnFailure"
 
-  aci_containers_config = {
-    "aci" = {
+  containers_config = {
+    aci = {
       image  = "${module.acr.login_server}/samples/nginx:latest"
       cpu    = 1
       memory = 2
@@ -56,7 +56,7 @@ module "aci" {
     }
   }
 
-  aci_registry_credential = {
+  registry_credential = {
     username = module.acr.admin_username
     password = module.acr.admin_password
     server   = module.acr.login_server

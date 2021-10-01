@@ -35,7 +35,7 @@ variable "name_prefix" {
   default     = ""
 }
 
-variable "aci_custom_name" {
+variable "custom_name" {
   description = "Custom Azure Container Instances group name, generated if not set"
   type        = string
   default     = ""
@@ -48,7 +48,7 @@ variable "extra_tags" {
 }
 
 ## ACI Specifics
-variable "aci_containers_config" {
+variable "containers_config" {
   description = <<EOD
 Containers configurations, defined by this type:
 ```
@@ -69,7 +69,7 @@ EOD
   type        = map(any)
 }
 
-variable "aci_registry_credential" {
+variable "registry_credential" {
   description = <<EOD
 A image_registry_credential block as documented below. Changing this forces a new resource to be created.
 ```
@@ -84,52 +84,52 @@ EOD
   default     = null
 }
 
-variable "aci_subnet_id" {
+variable "subnet_id" {
   description = <<EOD
 Subnet Id of the private network profile of the container.
-Mandatory when aci_ip_address_type is set to `Private`.
+Mandatory when ip_address_type is set to `Private`.
 EOD
   type        = string
   default     = null
 }
 
-variable "aci_nic_custom_name" {
-  description = "Custom name for the container private network interface. Used when aci_ip_address_type is set to `Private`."
+variable "nic_custom_name" {
+  description = "Custom name for the container private network interface. Used when ip_address_type is set to `Private`."
   type        = string
   default     = null
 }
 
-variable "aci_ipcfg_custom_name" {
-  description = "Custom name for the container ip configuration attached to its private network interface. Used when aci_ip_address_type is set to `Private`."
+variable "ipcfg_custom_name" {
+  description = "Custom name for the container ip configuration attached to its private network interface. Used when ip_address_type is set to `Private`."
   type        = string
   default     = null
 }
 
-variable "aci_network_profile_custom_name" {
-  description = "Custom name for the container private network profile. Used when aci_ip_address_type is set to `Private`."
+variable "network_profile_custom_name" {
+  description = "Custom name for the container private network profile. Used when ip_address_type is set to `Private`."
   type        = string
   default     = null
 }
 
-variable "aci_os_type" {
+variable "os_type" {
   description = "The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created."
   type        = string
   default     = "Linux"
 }
 
-variable "aci_restart_policy" {
+variable "restart_policy" {
   description = "Restart policy for the container group. Allowed values are Always, Never, OnFailure. Defaults to Always. Changing this forces a new resource to be created."
   type        = string
   default     = "Always"
 }
 
-variable "aci_enable_vnet_integration" {
+variable "enable_vnet_integration" {
   description = "Allow to enable Vnet integration"
   type        = bool
   default     = false
 }
 
-variable "aci_dns_name_label" {
+variable "dns_name_label" {
   description = "Aci Custom Dns Name Label when ip address type is public"
   type        = string
   default     = null

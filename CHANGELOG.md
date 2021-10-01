@@ -3,7 +3,7 @@
 Changed
   * AZ-572: Revamp examples and improve CI
 
-Added
+Breaking
   * AZ-563: Add Vnet integration
 
 # v3.0.2/v4.0.1 - 2021-08-27

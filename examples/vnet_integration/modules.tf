@@ -85,12 +85,12 @@ module "aci" {
 
   resource_group_name = module.rg.resource_group_name
 
-  aci_restart_policy = "OnFailure"
+  restart_policy = "OnFailure"
 
-  aci_subnet_id               = module.subnet.subnet_id
-  aci_enable_vnet_integration = true
+  subnet_id               = module.subnet.subnet_id
+  enable_vnet_integration = true
 
-  aci_containers_config = {
+  containers_config = {
     "aci" = {
       image  = "${module.acr.login_server}/samples/nginx:latest"
       cpu    = 1
@@ -103,7 +103,7 @@ module "aci" {
     }
   }
 
-  aci_registry_credential = {
+  registry_credential = {
     username = module.acr.admin_username
     password = module.acr.admin_password
     server   = module.acr.login_server
