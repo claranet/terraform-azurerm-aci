@@ -4,16 +4,16 @@ resource "azurerm_container_group" "aci" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  ip_address_type    = var.enable_vnet_integration ? "Private" : "Public"
-  network_profile_id = var.enable_vnet_integration ? azurerm_network_profile.network_profile[0].id : null
-  dns_name_label     = var.enable_vnet_integration ? null : coalesce(var.dns_name_label, local.default_name)
+  ip_address_type    = var.vnet_integration_enabled ? "Private" : "Public"
+  network_profile_id = var.vnet_integration_enabled ? azurerm_network_profile.network_profile[0].id : null
+  dns_name_label     = var.vnet_integration_enabled ? null : coalesce(var.dns_name_label, local.default_name)
 
   os_type = var.os_type
 
   restart_policy = var.restart_policy
 
   dynamic "image_registry_credential" {
-    for_each = var.registry_credential == null ? toset([]) : toset([""])
+    for_each = var.registry_credential != null ? ["fake"] : null
 
     content {
       username = var.registry_credential.username

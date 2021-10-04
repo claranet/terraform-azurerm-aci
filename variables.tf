@@ -70,43 +70,38 @@ EOD
 }
 
 variable "registry_credential" {
-  description = <<EOD
-A image_registry_credential block as documented below. Changing this forces a new resource to be created.
-```
-map(string) {
-  username - (Required) The username with which to connect to the registry. Changing this forces a new resource to be created.
-  password - (Required) The password with which to connect to the registry. Changing this forces a new resource to be created.
-  server - (Required) The address to use to connect to the registry without protocol ("https"/"http"). For example: "myacr.acr.io". Changing this forces a new resource to be created.
-}
-```
-EOD
-  type        = map(string)
-  default     = null
+  description = "A registry_credential object as documented below. Changing this forces a new resource to be created."
+  type = object({
+    username = string
+    password = string
+    server   = string
+  })
+  default = null
 }
 
 variable "subnet_id" {
   description = <<EOD
 Subnet Id of the private network profile of the container.
-Mandatory when ip_address_type is set to `Private`.
+Mandatory when VNet integration is enabled.
 EOD
   type        = string
   default     = null
 }
 
 variable "nic_custom_name" {
-  description = "Custom name for the container private network interface. Used when ip_address_type is set to `Private`."
+  description = "Custom name for the container private network interface. Used when VNet integration is enabled."
   type        = string
   default     = null
 }
 
 variable "ipcfg_custom_name" {
-  description = "Custom name for the container ip configuration attached to its private network interface. Used when ip_address_type is set to `Private`."
+  description = "Custom name for the container ip configuration attached to its private network interface. Used when VNet integration is enabled."
   type        = string
   default     = null
 }
 
 variable "network_profile_custom_name" {
-  description = "Custom name for the container private network profile. Used when ip_address_type is set to `Private`."
+  description = "Custom name for the container private network profile. Used when VNet integration is enabled."
   type        = string
   default     = null
 }
@@ -123,14 +118,14 @@ variable "restart_policy" {
   default     = "Always"
 }
 
-variable "enable_vnet_integration" {
+variable "vnet_integration_enabled" {
   description = "Allow to enable Vnet integration"
   type        = bool
   default     = false
 }
 
 variable "dns_name_label" {
-  description = "Aci Custom Dns Name Label when ip address type is public"
+  description = "ACI Custom DNS name label used when container is public."
   type        = string
   default     = null
 }
