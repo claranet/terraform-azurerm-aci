@@ -1,10 +1,10 @@
-# Unreleased
+# v4.1.0 - 2021-10-07
+
+Breaking
+  * AZ-563: Add VNet integration
 
 Changed
   * AZ-572: Revamp examples and improve CI
-
-Breaking
-  * AZ-563: Add Vnet integration
 
 # v3.0.2/v4.0.1 - 2021-08-27
 
