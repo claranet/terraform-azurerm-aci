@@ -52,7 +52,7 @@ module "acr" {
   stack       = var.stack
 }
 
-module "aci_myapp" {
+module "aci" {
   source  = "claranet/aci/azurerm"
   version = "x.x.x"
 
@@ -64,12 +64,11 @@ module "aci_myapp" {
 
   resource_group_name = module.rg.resource_group_name
 
-  name_prefix        = "myapp"
-  aci_restart_policy = "OnFailure"
+  restart_policy = "OnFailure"
 
-  aci_containers_config = {
-    "container-hello-world" = {
-      image  = "microsoft/aci-helloworld:latest"
+  containers_config = {
+    aci = {
+      image  = "${module.acr.login_server}/samples/nginx:latest"
       cpu    = 1
       memory = 2
 
@@ -80,12 +79,14 @@ module "aci_myapp" {
     }
   }
 
-  aci_registry_credential = {
+  registry_credential = {
     username = module.acr.admin_username
     password = module.acr.admin_password
-    server   = module.acr.acr_fqdn
+    server   = module.acr.login_server
   }
+
 }
+
 
 ```
 
@@ -104,25 +105,31 @@ No modules.
 | Name | Type |
 |------|------|
 | [azurerm_container_group.aci](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group) | resource |
+| [azurerm_network_profile.network_profile](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_profile) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aci\_containers\_config | Containers configurations, defined by this type:<pre>map(<br>  container-name (string) : object({<br>    image  = string<br>    cpu    = number<br>    memory = number<br><br>    ports = object({<br>      port     = number<br>      protocol = string<br>    })<br>  })<br>)</pre> | `map(any)` | n/a | yes |
-| aci\_ip\_address\_type | Specifies the ip address type of the container.<br>`Public` or `Private`.<br>Changing this forces a new resource to be created. If set to `Private`, `network_profile_id` also needs to be set. | `string` | `"Public"` | no |
-| aci\_os\_type | The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created. | `string` | `"Linux"` | no |
-| aci\_registry\_credential | A image\_registry\_credential block as documented below. Changing this forces a new resource to be created.<pre>map(string) {<br>  username - (Required) The username with which to connect to the registry. Changing this forces a new resource to be created.<br>  password - (Required) The password with which to connect to the registry. Changing this forces a new resource to be created.<br>  server - (Required) The address to use to connect to the registry without protocol ("https"/"http"). For example: "myacr.acr.io". Changing this forces a new resource to be created.<br>}</pre> | `map(string)` | `null` | no |
-| aci\_restart\_policy | Restart policy for the container group. Allowed values are Always, Never, OnFailure. Defaults to Always. Changing this forces a new resource to be created. | `string` | `"Always"` | no |
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
+| containers\_config | Containers configurations, defined by this type:<pre>map(<br>  container-name (string) : object({<br>    image  = string<br>    cpu    = number<br>    memory = number<br><br>    ports = object({<br>      port     = number<br>      protocol = string<br>    })<br>  })<br>)</pre> | `map(any)` | n/a | yes |
 | custom\_name | Custom Azure Container Instances group name, generated if not set | `string` | `""` | no |
+| dns\_name\_label | ACI Custom DNS name label used when container is public. | `string` | `null` | no |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Container Instances group. | `map(string)` | `{}` | no |
+| ipcfg\_custom\_name | Custom name for the container ip configuration attached to its private network interface. Used when VNet integration is enabled. | `string` | `null` | no |
 | location | Azure region to use | `string` | n/a | yes |
 | location\_short | Short string for Azure location | `string` | n/a | yes |
 | name\_prefix | Optional prefix for Azure Container Instances group name | `string` | `""` | no |
+| network\_profile\_custom\_name | Custom name for the container private network profile. Used when VNet integration is enabled. | `string` | `null` | no |
+| nic\_custom\_name | Custom name for the container private network interface. Used when VNet integration is enabled. | `string` | `null` | no |
+| os\_type | The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created. | `string` | `"Linux"` | no |
+| registry\_credential | A registry\_credential object as documented below. Changing this forces a new resource to be created. | <pre>object({<br>    username = string<br>    password = string<br>    server   = string<br>  })</pre> | `null` | no |
 | resource\_group\_name | Name of the resource group | `string` | n/a | yes |
+| restart\_policy | Restart policy for the container group. Allowed values are Always, Never, OnFailure. Defaults to Always. Changing this forces a new resource to be created. | `string` | `"Always"` | no |
 | stack | Project stack name | `string` | n/a | yes |
+| subnet\_id | Subnet Id of the private network profile of the container.<br>Mandatory when VNet integration is enabled. | `string` | `null` | no |
+| vnet\_integration\_enabled | Allow to enable Vnet integration | `bool` | `false` | no |
 
 ## Outputs
 
@@ -132,6 +139,7 @@ No modules.
 | aci\_id | Azure container instance group ID |
 | aci\_ip\_address | The IP address allocated to the container instance group. |
 <!-- END_TF_DOCS -->
+
 ## Related documentation
 
 Microsoft Azure documentation: [docs.microsoft.com/en-us/azure/container-instances/container-instances-overview](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-overview)

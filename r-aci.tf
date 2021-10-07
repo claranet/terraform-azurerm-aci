@@ -1,27 +1,29 @@
 resource "azurerm_container_group" "aci" {
-  name = coalesce(var.custom_name, local.aci_name)
+  name = coalesce(var.custom_name, local.default_name)
 
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  ip_address_type = var.aci_ip_address_type
-  dns_name_label  = coalesce(var.custom_name, local.aci_name)
-  os_type         = var.aci_os_type
+  ip_address_type    = var.vnet_integration_enabled ? "Private" : "Public"
+  network_profile_id = var.vnet_integration_enabled ? azurerm_network_profile.network_profile[0].id : null
+  dns_name_label     = var.vnet_integration_enabled ? null : coalesce(var.dns_name_label, local.default_name)
 
-  restart_policy = var.aci_restart_policy
+  os_type = var.os_type
+
+  restart_policy = var.restart_policy
 
   dynamic "image_registry_credential" {
-    for_each = var.aci_registry_credential == null ? toset([]) : toset([""])
+    for_each = var.registry_credential != null ? ["fake"] : null
 
     content {
-      username = var.aci_registry_credential.username
-      password = var.aci_registry_credential.password
-      server   = var.aci_registry_credential.server
+      username = var.registry_credential.username
+      password = var.registry_credential.password
+      server   = var.registry_credential.server
     }
   }
 
   dynamic "container" {
-    for_each = var.aci_containers_config
+    for_each = var.containers_config
 
     content {
       name = container.key
@@ -43,3 +45,4 @@ resource "azurerm_container_group" "aci" {
 
   tags = merge(local.default_tags, var.extra_tags)
 }
+

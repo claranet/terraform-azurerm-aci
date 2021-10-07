@@ -48,7 +48,7 @@ variable "extra_tags" {
 }
 
 ## ACI Specifics
-variable "aci_containers_config" {
+variable "containers_config" {
   description = <<EOD
 Containers configurations, defined by this type:
 ```
@@ -69,39 +69,64 @@ EOD
   type        = map(any)
 }
 
-variable "aci_registry_credential" {
-  description = <<EOD
-A image_registry_credential block as documented below. Changing this forces a new resource to be created.
-```
-map(string) {
-  username - (Required) The username with which to connect to the registry. Changing this forces a new resource to be created.
-  password - (Required) The password with which to connect to the registry. Changing this forces a new resource to be created.
-  server - (Required) The address to use to connect to the registry without protocol ("https"/"http"). For example: "myacr.acr.io". Changing this forces a new resource to be created.
+variable "registry_credential" {
+  description = "A registry_credential object as documented below. Changing this forces a new resource to be created."
+  type = object({
+    username = string
+    password = string
+    server   = string
+  })
+  default = null
 }
-```
+
+variable "subnet_id" {
+  description = <<EOD
+Subnet Id of the private network profile of the container.
+Mandatory when VNet integration is enabled.
 EOD
-  type        = map(string)
+  type        = string
   default     = null
 }
 
-variable "aci_ip_address_type" {
-  description = <<EOD
-Specifies the ip address type of the container.
-`Public` or `Private`.
-Changing this forces a new resource to be created. If set to `Private`, `network_profile_id` also needs to be set.
-EOD
+variable "nic_custom_name" {
+  description = "Custom name for the container private network interface. Used when VNet integration is enabled."
   type        = string
-  default     = "Public"
+  default     = null
 }
 
-variable "aci_os_type" {
+variable "ipcfg_custom_name" {
+  description = "Custom name for the container ip configuration attached to its private network interface. Used when VNet integration is enabled."
+  type        = string
+  default     = null
+}
+
+variable "network_profile_custom_name" {
+  description = "Custom name for the container private network profile. Used when VNet integration is enabled."
+  type        = string
+  default     = null
+}
+
+variable "os_type" {
   description = "The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created."
   type        = string
   default     = "Linux"
 }
 
-variable "aci_restart_policy" {
+variable "restart_policy" {
   description = "Restart policy for the container group. Allowed values are Always, Never, OnFailure. Defaults to Always. Changing this forces a new resource to be created."
   type        = string
   default     = "Always"
 }
+
+variable "vnet_integration_enabled" {
+  description = "Allow to enable Vnet integration"
+  type        = bool
+  default     = false
+}
+
+variable "dns_name_label" {
+  description = "ACI Custom DNS name label used when container is public."
+  type        = string
+  default     = null
+}
+
