@@ -1,4 +1,4 @@
-# unreleased
+# v4.2.0 - 2021-11-15
 
 Added
   * AZ-589: Add and enable diagnostics
