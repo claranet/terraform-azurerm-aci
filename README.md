@@ -38,6 +38,18 @@ module "rg" {
   stack       = var.stack
 }
 
+module "logs" {
+  source  = "claranet/run-common/azurerm//modules/logs"
+  version = "x.x.x"
+
+  client_name         = var.client_name
+  environment         = var.environment
+  stack               = var.stack
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
+  resource_group_name = module.rg.resource_group_name
+}
+
 module "acr" {
   source  = "claranet/acr/azurerm"
   version = "x.x.x"
@@ -50,6 +62,15 @@ module "acr" {
   client_name = var.client_name
   environment = var.environment
   stack       = var.stack
+
+  logs_destinations_ids = [
+    module.logs.logs_storage_account_id,
+    module.logs.log_analytics_workspace_id
+  ]
+
+  extra_tags = {
+    foo = "bar"
+  }
 }
 
 module "aci" {
@@ -85,6 +106,14 @@ module "aci" {
     server   = module.acr.login_server
   }
 
+  logs_destinations_ids = [
+    module.logs.logs_storage_account_id,
+    module.logs.log_analytics_workspace_id
+  ]
+
+  extra_tags = {
+    foo = "bar"
+  }
 }
 
 
@@ -98,7 +127,9 @@ module "aci" {
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| diagnostics | claranet/diagnostic-settings/azurerm | 4.0.3 |
 
 ## Resources
 
@@ -120,6 +151,10 @@ No modules.
 | ipcfg\_custom\_name | Custom name for the container ip configuration attached to its private network interface. Used when VNet integration is enabled. | `string` | `null` | no |
 | location | Azure region to use | `string` | n/a | yes |
 | location\_short | Short string for Azure location | `string` | n/a | yes |
+| logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
+| logs\_destinations\_ids | List of destination resources Ids for logs diagnostics destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set. Empty list to disable logging. | `list(string)` | n/a | yes |
+| logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
+| logs\_retention\_days | Number of days to keep logs on storage account | `number` | `30` | no |
 | name\_prefix | Optional prefix for Azure Container Instances group name | `string` | `""` | no |
 | network\_profile\_custom\_name | Custom name for the container private network profile. Used when VNet integration is enabled. | `string` | `null` | no |
 | nic\_custom\_name | Custom name for the container private network interface. Used when VNet integration is enabled. | `string` | `null` | no |
