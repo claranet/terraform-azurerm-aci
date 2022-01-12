@@ -47,6 +47,12 @@ variable "extra_tags" {
   default     = {}
 }
 
+variable "default_tags_enabled" {
+  description = "Option to enable or disable default tags."
+  type        = bool
+  default     = true
+}
+
 ## ACI Specifics
 variable "containers_config" {
   description = <<EOD
@@ -129,4 +135,3 @@ variable "dns_name_label" {
   type        = string
   default     = null
 }
-

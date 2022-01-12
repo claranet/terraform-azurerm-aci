@@ -6,8 +6,8 @@ locals {
   default_ipcfg_name           = "${local.name_prefix}${var.stack}-${var.client_name}-${var.location_short}-${var.environment}-aciipcfg"
 
 
-  default_tags = {
+  default_tags = var.default_tags_enabled ? {
     env   = var.environment
     stack = var.stack
-  }
+  } : {}
 }
