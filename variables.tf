@@ -1,4 +1,4 @@
-## Common variables
+#### Common variables
 variable "resource_group_name" {
   description = "Name of the resource group"
   type        = string
@@ -39,18 +39,6 @@ variable "custom_name" {
   description = "Custom Azure Container Instances group name, generated if not set"
   type        = string
   default     = ""
-}
-
-variable "extra_tags" {
-  description = "Additional tags to associate with your Azure Container Instances group."
-  type        = map(string)
-  default     = {}
-}
-
-variable "default_tags_enabled" {
-  description = "Option to enable or disable default tags."
-  type        = bool
-  default     = true
 }
 
 ## ACI Specifics
