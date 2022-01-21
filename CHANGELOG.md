@@ -1,10 +1,10 @@
-# Unreleased
+# v4.3.0 - 2022-01-21
 
 Added
   * AZ-615: Add an option to enable or disable default tags
 
 Fixed
-  * AZ-615: Cannot use a `null` value in for_each
+  * AZ-615: Cannot use a `null` value in `dynamic for_each`
 
 # v4.2.0 - 2021-11-15
 
