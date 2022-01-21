@@ -1,3 +1,11 @@
+# Unreleased
+
+Added
+  * AZ-615: Add an option to enable or disable default tags
+
+Fixed
+  * AZ-615: Cannot use a `null` value in for_each
+
 # v4.2.0 - 2021-11-15
 
 Added

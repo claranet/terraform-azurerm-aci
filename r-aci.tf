@@ -13,7 +13,7 @@ resource "azurerm_container_group" "aci" {
   restart_policy = var.restart_policy
 
   dynamic "image_registry_credential" {
-    for_each = var.registry_credential != null ? ["fake"] : null
+    for_each = var.registry_credential != null ? ["fake"] : []
 
     content {
       username = var.registry_credential.username
@@ -45,4 +45,3 @@ resource "azurerm_container_group" "aci" {
 
   tags = merge(local.default_tags, var.extra_tags)
 }
-

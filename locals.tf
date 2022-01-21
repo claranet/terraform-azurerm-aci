@@ -4,10 +4,4 @@ locals {
   default_network_profile_name = "${local.name_prefix}${var.stack}-${var.client_name}-${var.location_short}-${var.environment}-acinpn"
   default_nic_name             = "${local.name_prefix}${var.stack}-${var.client_name}-${var.location_short}-${var.environment}-acinn"
   default_ipcfg_name           = "${local.name_prefix}${var.stack}-${var.client_name}-${var.location_short}-${var.environment}-aciipcfg"
-
-
-  default_tags = {
-    env   = var.environment
-    stack = var.stack
-  }
 }
