@@ -1,3 +1,7 @@
+# v4.4.0 - 2022-02-18
+Fixed
+  * AZ-677: Add containers_config options (```environment_variables, secure_environment_variables, commands```)
+
 # v4.3.0 - 2022-01-21
 
 Added

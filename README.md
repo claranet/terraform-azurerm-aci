@@ -143,7 +143,7 @@ module "aci" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
-| containers\_config | Containers configurations, defined by this type:<pre>map(<br>  container-name (string) : object({<br>    image  = string<br>    cpu    = number<br>    memory = number<br><br>    ports = object({<br>      port     = number<br>      protocol = string<br>    })<br>  })<br>)</pre> | `map(any)` | n/a | yes |
+| containers\_config | Containers configurations, defined by this type:<pre>map(<br>    container-name (string) : object({<br>    image                        = string<br>    cpu                          = number<br>    memory                       = number<br>    environment_variables        = optional(map)<br>    secure_environment_variables = optional(map)<br>    commands                     = optional(list)<br><br>    ports = object({<br>      port     = number<br>      protocol = string<br>    })<br>  })<br><br>    image  = string<br>    cpu    = number<br>    memory = number<br>    environment_variables = optional(map)<br>    secure_environment_variables = optional(map)<br>    commands = optionnal(list)<br><br>    ports = object({<br>      port     = number<br>      protocol = string<br>    })<br>  })<br>)</pre> | `map(any)` | n/a | yes |
 | custom\_name | Custom Azure Container Instances group name, generated if not set | `string` | `""` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | dns\_name\_label | ACI Custom DNS name label used when container is public. | `string` | `null` | no |
