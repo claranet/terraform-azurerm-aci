@@ -47,7 +47,7 @@ variable "containers_config" {
 Containers configurations, defined by this type:
 ```
 map(
-    container-name (string) : object({
+  container-name (string) : object({
     image                        = string
     cpu                          = number
     memory                       = number
@@ -61,17 +61,16 @@ map(
     })
   })
 
-    image  = string
-    cpu    = number
-    memory = number
-    environment_variables = optional(map)
-    secure_environment_variables = optional(map)
-    commands = optionnal(list)
-
-    ports = object({
-      port     = number
-      protocol = string
-    })
+  image                        = string
+  cpu                          = number
+  memory                       = number
+  environment_variables        = optional(map)
+  secure_environment_variables = optional(map)
+  commands                     = optionnal(list)
+  
+  ports = object({
+    port     = number
+    protocol = string
   })
 )
 ```
