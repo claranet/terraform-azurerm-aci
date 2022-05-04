@@ -55,22 +55,10 @@ map(
     secure_environment_variables = optional(map)
     commands                     = optional(list)
 
-    ports = object({
+    ports = list(object({
       port     = number
       protocol = string
-    })
-  })
-
-  image                        = string
-  cpu                          = number
-  memory                       = number
-  environment_variables        = optional(map)
-  secure_environment_variables = optional(map)
-  commands                     = optionnal(list)
-  
-  ports = object({
-    port     = number
-    protocol = string
+    }))
   })
 )
 ```
