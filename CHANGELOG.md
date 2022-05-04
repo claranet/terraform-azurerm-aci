@@ -1,7 +1,16 @@
+# Unreleased
+
+Breaking
+  * AZ-515: Option to use Azure CAF naming provider to name resources
+  * AZ-515: Require Terraform 0.13+
+
+Changed
+  * AZ-589: Update diagnostics settings to `v5.0.0`
+
 # v4.4.0 - 2022-05-06
 
 Added
-  * AZ-677: Add containers_config options (```environment_variables, secure_environment_variables, commands```)
+  * AZ-677: Add containers_config options (`environment_variables, secure_environment_variables, commands`)
 
 # v4.3.0 - 2022-01-21
 
