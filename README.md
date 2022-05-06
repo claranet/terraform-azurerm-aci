@@ -123,18 +123,23 @@ module "aci" {
 
 | Name | Version |
 |------|---------|
+| azurecaf | ~> 1.1 |
 | azurerm | >= 1.31 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics | claranet/diagnostic-settings/azurerm | 4.0.3 |
+| diagnostics | claranet/diagnostic-settings/azurerm | 5.0.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
+| [azurecaf_name.aci](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
+| [azurecaf_name.ipcfg](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
+| [azurecaf_name.network_profile](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
+| [azurecaf_name.nic](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
 | [azurerm_container_group.aci](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group) | resource |
 | [azurerm_network_profile.network_profile](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_profile) | resource |
 
@@ -144,6 +149,7 @@ module "aci" {
 |------|-------------|------|---------|:--------:|
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
 | containers\_config | Containers configurations, defined by this type:<pre>map(<br>  container-name (string) : object({<br>    image                        = string<br>    cpu                          = number<br>    memory                       = number<br>    environment_variables        = optional(map)<br>    secure_environment_variables = optional(map)<br>    commands                     = optional(list)<br><br>    ports = list(object({<br>      port     = number<br>      protocol = string<br>    }))<br>  })<br>)</pre> | `map(any)` | n/a | yes |
+| custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | custom\_name | Custom Azure Container Instances group name, generated if not set | `string` | `""` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | dns\_name\_label | ACI Custom DNS name label used when container is public. | `string` | `null` | no |
@@ -156,7 +162,8 @@ module "aci" {
 | logs\_destinations\_ids | List of destination resources Ids for logs diagnostics destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set. Empty list to disable logging. | `list(string)` | n/a | yes |
 | logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | logs\_retention\_days | Number of days to keep logs on storage account | `number` | `30` | no |
-| name\_prefix | Optional prefix for Azure Container Instances group name | `string` | `""` | no |
+| name\_prefix | Optional prefix for the generated name | `string` | `""` | no |
+| name\_suffix | Optional suffix for the generated name | `string` | `""` | no |
 | network\_profile\_custom\_name | Custom name for the container private network profile. Used when VNet integration is enabled. | `string` | `null` | no |
 | nic\_custom\_name | Custom name for the container private network interface. Used when VNet integration is enabled. | `string` | `null` | no |
 | os\_type | The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created. | `string` | `"Linux"` | no |
@@ -165,6 +172,7 @@ module "aci" {
 | restart\_policy | Restart policy for the container group. Allowed values are Always, Never, OnFailure. Defaults to Always. Changing this forces a new resource to be created. | `string` | `"Always"` | no |
 | stack | Project stack name | `string` | n/a | yes |
 | subnet\_id | Subnet Id of the private network profile of the container.<br>Mandatory when VNet integration is enabled. | `string` | `null` | no |
+| use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 | vnet\_integration\_enabled | Allow to enable Vnet integration | `bool` | `false` | no |
 
 ## Outputs

@@ -29,18 +29,6 @@ variable "client_name" {
   type        = string
 }
 
-variable "name_prefix" {
-  description = "Optional prefix for Azure Container Instances group name"
-  type        = string
-  default     = ""
-}
-
-variable "custom_name" {
-  description = "Custom Azure Container Instances group name, generated if not set"
-  type        = string
-  default     = ""
-}
-
 ## ACI Specifics
 variable "containers_config" {
   description = <<EOD
@@ -81,24 +69,6 @@ variable "subnet_id" {
 Subnet Id of the private network profile of the container.
 Mandatory when VNet integration is enabled.
 EOD
-  type        = string
-  default     = null
-}
-
-variable "nic_custom_name" {
-  description = "Custom name for the container private network interface. Used when VNet integration is enabled."
-  type        = string
-  default     = null
-}
-
-variable "ipcfg_custom_name" {
-  description = "Custom name for the container ip configuration attached to its private network interface. Used when VNet integration is enabled."
-  type        = string
-  default     = null
-}
-
-variable "network_profile_custom_name" {
-  description = "Custom name for the container private network profile. Used when VNet integration is enabled."
   type        = string
   default     = null
 }
