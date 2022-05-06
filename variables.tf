@@ -48,14 +48,17 @@ Containers configurations, defined by this type:
 ```
 map(
   container-name (string) : object({
-    image  = string
-    cpu    = number
-    memory = number
+    image                        = string
+    cpu                          = number
+    memory                       = number
+    environment_variables        = optional(map)
+    secure_environment_variables = optional(map)
+    commands                     = optional(list)
 
-    ports = object({
+    ports = list(object({
       port     = number
       protocol = string
-    })
+    }))
   })
 )
 ```
