@@ -49,14 +49,13 @@ variable "containers_config" {
     }))
 
     volume = optional(list(object({
-      name                 = optional(string)
-      mount_path           = optional(string)
+      name                 = string
+      mount_path           = string
       read_only            = optional(bool)
       empty_dir            = optional(bool)
       storage_account_name = optional(string)
       storage_account_key  = optional(string)
       share_name           = optional(string)
-      git_repo             = optional(string)
       secret               = optional(map(any))
     })), [])
   }))
