@@ -1,3 +1,8 @@
+# Unreleased
+
+Breaking
+  * AZ-840: Require Terraform 1.3+
+
 # v5.0.0 - 2022-05-06
 
 Breaking
