@@ -31,27 +31,23 @@ variable "client_name" {
 
 ## ACI Specifics
 variable "containers_config" {
-  description = <<EOD
-Containers configurations, defined by this type:
-```
-map(
-  container-name (string) : object({
-    image                        = string
-    cpu                          = number
-    memory                       = number
-    environment_variables        = optional(map)
-    secure_environment_variables = optional(map)
-    commands                     = optional(list)
+  description = "Containers configurations."
+  type = list(object({
+    name = string
+
+    image  = string
+    cpu    = number
+    memory = number
+
+    environment_variables        = optional(map(string))
+    secure_environment_variables = optional(map(string))
+    commands                     = optional(list(string))
 
     ports = list(object({
       port     = number
       protocol = string
     }))
-  })
-)
-```
-EOD
-  type        = map(any)
+  }))
 }
 
 variable "registry_credential" {
