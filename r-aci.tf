@@ -36,7 +36,6 @@ resource "azurerm_container_group" "aci" {
       secure_environment_variables = container.value.secure_environment_variables
       commands                     = container.value.commands
 
-
       dynamic "ports" {
         for_each = container.value.ports
 
