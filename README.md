@@ -89,8 +89,9 @@ module "aci" {
 
   restart_policy = "OnFailure"
 
-  containers_config = {
-    aci = {
+  containers_config = [
+    {
+      name   = "aci-example"
       image  = "${module.acr.login_server}/samples/nginx:latest"
       cpu    = 1
       memory = 2
@@ -100,7 +101,7 @@ module "aci" {
         protocol = "TCP"
       }]
     }
-  }
+  ]
 
   registry_credential = {
     username = module.acr.admin_username
@@ -125,13 +126,13 @@ module "aci" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.1 |
-| azurerm | >= 1.31 |
+| azurerm | ~> 3.22 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics | claranet/diagnostic-settings/azurerm | 5.0.0 |
+| diagnostics | claranet/diagnostic-settings/azurerm | 6.1.0 |
 
 ## Resources
 
@@ -149,7 +150,7 @@ module "aci" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | client\_name | Client name/account used in naming | `string` | n/a | yes |
-| containers\_config | Containers configurations, defined by this type:<pre>map(<br>  container-name (string) : object({<br>    image                        = string<br>    cpu                          = number<br>    memory                       = number<br>    environment_variables        = optional(map)<br>    secure_environment_variables = optional(map)<br>    commands                     = optional(list)<br><br>    ports = list(object({<br>      port     = number<br>      protocol = string<br>    }))<br>  })<br>)</pre> | `map(any)` | n/a | yes |
+| containers\_config | Containers configurations. | <pre>list(object({<br>    name = string<br><br>    image  = string<br>    cpu    = number<br>    memory = number<br><br>    environment_variables        = optional(map(string))<br>    secure_environment_variables = optional(map(string))<br>    commands                     = optional(list(string))<br><br>    ports = list(object({<br>      port     = number<br>      protocol = string<br>    }))<br>  }))</pre> | n/a | yes |
 | custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | custom\_name | Custom Azure Container Instances group name, generated if not set | `string` | `""` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
@@ -160,9 +161,9 @@ module "aci" {
 | location | Azure region to use | `string` | n/a | yes |
 | location\_short | Short string for Azure location | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
-| logs\_destinations\_ids | List of destination resources Ids for logs diagnostics destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set. Empty list to disable logging. | `list(string)` | n/a | yes |
+| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br>If you want to specify an Azure EventHub to send logs and metrics to, you need to provide a formated string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separate> | `list(string)` | n/a | yes |
 | logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
-| logs\_retention\_days | Number of days to keep logs on storage account | `number` | `30` | no |
+| logs\_retention\_days | Number of days to keep logs on storage account. | `number` | `30` | no |
 | name\_prefix | Optional prefix for the generated name | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name | `string` | `""` | no |
 | network\_profile\_custom\_name | Custom name for the container private network profile. Used when VNet integration is enabled. | `string` | `null` | no |

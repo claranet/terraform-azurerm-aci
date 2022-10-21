@@ -26,15 +26,15 @@ resource "azurerm_container_group" "aci" {
     for_each = var.containers_config
 
     content {
-      name = container.key
+      name = container.value.name
 
       image  = container.value.image
       cpu    = container.value.cpu
       memory = container.value.memory
 
-      environment_variables        = lookup(container.value, "environment_variables", null)
-      secure_environment_variables = lookup(container.value, "secure_environment_variables", null)
-      commands                     = lookup(container.value, "commands", null)
+      environment_variables        = container.value.environment_variables
+      secure_environment_variables = container.value.secure_environment_variables
+      commands                     = container.value.commands
 
       dynamic "ports" {
         for_each = container.value.ports

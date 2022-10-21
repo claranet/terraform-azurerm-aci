@@ -110,8 +110,9 @@ module "aci" {
   subnet_id                = module.subnet.subnet_id
   vnet_integration_enabled = true
 
-  containers_config = {
-    "aci" = {
+  containers_config = [
+    {
+      name   = "aci-example"
       image  = "${module.acr.login_server}/samples/nginx:latest"
       cpu    = 1
       memory = 2
@@ -121,7 +122,7 @@ module "aci" {
         protocol = "TCP"
       }]
     }
-  }
+  ]
 
   registry_credential = {
     username = module.acr.admin_username
