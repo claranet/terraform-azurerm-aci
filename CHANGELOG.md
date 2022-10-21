@@ -3,7 +3,7 @@
 Breaking
   * AZ-840: Require Terraform 1.3+
   * AZ-880: Rework module code, minimum AzureRM version to `v3.22`
-  * AZ-846: Bump diagnotics settings module
+  * AZ-846: Bump diagnostics settings module
 
 # v5.0.0 - 2022-05-06
 
@@ -17,7 +17,7 @@ Changed
 # v4.4.0 - 2022-05-06
 
 Added
-  * AZ-677: Add containers_config options (`environment_variables, secure_environment_variables, commands`)
+  * AZ-677: Add `containers_config` options (`environment_variables, secure_environment_variables, commands`)
 
 # v4.3.0 - 2022-01-21
 
