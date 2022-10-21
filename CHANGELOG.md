@@ -3,6 +3,7 @@
 Breaking
   * AZ-840: Require Terraform 1.3+
   * AZ-880: Rework module code, minimum AzureRM version to `v3.22`
+  * AZ-846: Bump diagnotics settings module
 
 # v5.0.0 - 2022-05-06
 
