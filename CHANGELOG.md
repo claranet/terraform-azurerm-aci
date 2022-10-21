@@ -1,4 +1,4 @@
-# Unreleased
+# v7.1.0 - 2022-10-21
 
 Added
   * [GH-1](https://github.com/claranet/terraform-azurerm-aci/pull/1): Add volumes configuration option
