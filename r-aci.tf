@@ -44,6 +44,21 @@ resource "azurerm_container_group" "aci" {
           protocol = ports.value.protocol
         }
       }
+
+      dynamic "volume" {
+        for_each = container.value.volume
+
+        content {
+          name                 = volume.value.name
+          mount_path           = volume.value.mount_path
+          read_only            = try(volume.value.read_only, null)
+          empty_dir            = try(volume.value.empty_dir, null)
+          storage_account_name = try(volume.value.storage_account_name, null)
+          storage_account_key  = try(volume.value.storage_account_key, null)
+          share_name           = try(volume.value.share_name, null)
+          secret               = try(volume.value.secret, null)
+        }
+      }
     }
   }
 
