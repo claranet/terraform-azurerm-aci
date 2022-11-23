@@ -1,4 +1,4 @@
-resource "azurecaf_name" "aci" {
+data "azurecaf_name" "aci" {
   name          = var.stack
   resource_type = "azurerm_resource_group" # unsupported for now
   prefixes      = compact([local.name_prefix, var.use_caf_naming ? "aci" : ""])
@@ -8,7 +8,7 @@ resource "azurecaf_name" "aci" {
   separator     = "-"
 }
 
-resource "azurecaf_name" "network_profile" {
+data "azurecaf_name" "network_profile" {
   name          = var.stack
   resource_type = "azurerm_resource_group" # unsupported for now
   prefixes      = compact([local.name_prefix, var.use_caf_naming ? "acinpn" : ""])
@@ -18,7 +18,7 @@ resource "azurecaf_name" "network_profile" {
   separator     = "-"
 }
 
-resource "azurecaf_name" "nic" {
+data "azurecaf_name" "nic" {
   name          = var.stack
   resource_type = "azurerm_network_interface"
   prefixes      = var.name_prefix == "" ? null : [local.name_prefix]
@@ -28,7 +28,7 @@ resource "azurecaf_name" "nic" {
   separator     = "-"
 }
 
-resource "azurecaf_name" "ipcfg" {
+data "azurecaf_name" "ipcfg" {
   name          = var.stack
   resource_type = "azurerm_resource_group" # unsupported for now
   prefixes      = compact([local.name_prefix, var.use_caf_naming ? "aciipcfg" : ""])
