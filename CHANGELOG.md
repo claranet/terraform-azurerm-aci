@@ -1,3 +1,8 @@
+# Unreleased
+
+Changed
+  * [GH-3](https://github.com/claranet/terraform-azurerm-aci/pull/3): Update private ACI mode (VNet integration), bump AzureRM provider to `v3.29+`
+
 # v7.2.0 - 2022-11-23
 
 Changed

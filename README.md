@@ -126,7 +126,7 @@ module "aci" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.2, >= 1.2.22 |
-| azurerm | ~> 3.22 |
+| azurerm | ~> 3.29 |
 
 ## Modules
 
@@ -139,7 +139,6 @@ module "aci" {
 | Name | Type |
 |------|------|
 | [azurerm_container_group.aci](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group) | resource |
-| [azurerm_network_profile.network_profile](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_profile) | resource |
 | [azurecaf_name.aci](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.ipcfg](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.network_profile](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
@@ -173,7 +172,7 @@ module "aci" {
 | resource\_group\_name | Name of the resource group | `string` | n/a | yes |
 | restart\_policy | Restart policy for the container group. Allowed values are Always, Never, OnFailure. Defaults to Always. Changing this forces a new resource to be created. | `string` | `"Always"` | no |
 | stack | Project stack name | `string` | n/a | yes |
-| subnet\_id | Subnet Id of the private network profile of the container.<br>Mandatory when VNet integration is enabled. | `string` | `null` | no |
+| subnet\_ids | Subnet Ids of the private network profile of the container.<br>Mandatory when VNet integration is enabled. | `list(string)` | `null` | no |
 | use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
 | vnet\_integration\_enabled | Allow to enable Vnet integration | `bool` | `false` | no |
 
