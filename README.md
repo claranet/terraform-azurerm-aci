@@ -140,9 +140,6 @@ module "aci" {
 |------|------|
 | [azurerm_container_group.aci](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group) | resource |
 | [azurecaf_name.aci](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
-| [azurecaf_name.ipcfg](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
-| [azurecaf_name.network_profile](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
-| [azurecaf_name.nic](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
 
@@ -156,7 +153,6 @@ module "aci" {
 | dns\_name\_label | ACI Custom DNS name label used when container is public. | `string` | `null` | no |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Container Instances group. | `map(string)` | `{}` | no |
-| ipcfg\_custom\_name | Custom name for the container ip configuration attached to its private network interface. Used when VNet integration is enabled. | `string` | `null` | no |
 | location | Azure region to use | `string` | n/a | yes |
 | location\_short | Short string for Azure location | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
@@ -165,16 +161,14 @@ module "aci" {
 | logs\_retention\_days | Number of days to keep logs on storage account. | `number` | `30` | no |
 | name\_prefix | Optional prefix for the generated name | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name | `string` | `""` | no |
-| network\_profile\_custom\_name | Custom name for the container private network profile. Used when VNet integration is enabled. | `string` | `null` | no |
-| nic\_custom\_name | Custom name for the container private network interface. Used when VNet integration is enabled. | `string` | `null` | no |
 | os\_type | The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created. | `string` | `"Linux"` | no |
 | registry\_credential | A registry\_credential object as documented below. Changing this forces a new resource to be created. | <pre>object({<br>    username = string<br>    password = string<br>    server   = string<br>  })</pre> | `null` | no |
 | resource\_group\_name | Name of the resource group | `string` | n/a | yes |
-| restart\_policy | Restart policy for the container group. Allowed values are Always, Never, OnFailure. Defaults to Always. Changing this forces a new resource to be created. | `string` | `"Always"` | no |
+| restart\_policy | Restart policy for the container group. Allowed values are `Always`, `Never`, `OnFailure`. Changing this forces a new resource to be created. | `string` | `"Always"` | no |
 | stack | Project stack name | `string` | n/a | yes |
-| subnet\_ids | Subnet Ids of the private network profile of the container.<br>Mandatory when VNet integration is enabled. | `list(string)` | `null` | no |
+| subnet\_ids | Subnet IDs of the private network profile of the container.<br>Mandatory when VNet integration is enabled. | `list(string)` | `null` | no |
 | use\_caf\_naming | Use the Azure CAF naming provider to generate default resource name. `custom_name` override this if set. Legacy default name is used if this is set to `false`. | `bool` | `true` | no |
-| vnet\_integration\_enabled | Allow to enable Vnet integration | `bool` | `false` | no |
+| vnet\_integration\_enabled | Allow to enable Vnet integration. | `bool` | `false` | no |
 
 ## Outputs
 
