@@ -76,7 +76,7 @@ variable "subnet_ids" {
 Subnet Ids of the private network profile of the container.
 Mandatory when VNet integration is enabled.
 EOD
-  type        = string
+  type        = list(string)
   default     = null
 }
 
