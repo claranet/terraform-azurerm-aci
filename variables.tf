@@ -71,12 +71,12 @@ variable "registry_credential" {
   default = null
 }
 
-variable "subnet_id" {
+variable "subnet_ids" {
   description = <<EOD
-Subnet Id of the private network profile of the container.
+Subnet Ids of the private network profile of the container.
 Mandatory when VNet integration is enabled.
 EOD
-  type        = string
+  type        = list(string)
   default     = null
 }
 
