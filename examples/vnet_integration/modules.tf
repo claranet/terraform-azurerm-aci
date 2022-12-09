@@ -107,8 +107,8 @@ module "aci" {
 
   restart_policy = "OnFailure"
 
-  subnet_id                = module.subnet.subnet_id
   vnet_integration_enabled = true
+  subnet_ids               = [module.subnet.subnet_id]
 
   containers_config = [
     {

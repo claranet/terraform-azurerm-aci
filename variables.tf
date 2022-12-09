@@ -71,15 +71,6 @@ variable "registry_credential" {
   default = null
 }
 
-variable "subnet_id" {
-  description = <<EOD
-Subnet Id of the private network profile of the container.
-Mandatory when VNet integration is enabled.
-EOD
-  type        = string
-  default     = null
-}
-
 variable "os_type" {
   description = "The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created."
   type        = string
@@ -87,15 +78,24 @@ variable "os_type" {
 }
 
 variable "restart_policy" {
-  description = "Restart policy for the container group. Allowed values are Always, Never, OnFailure. Defaults to Always. Changing this forces a new resource to be created."
+  description = "Restart policy for the container group. Allowed values are `Always`, `Never`, `OnFailure`. Changing this forces a new resource to be created."
   type        = string
   default     = "Always"
 }
 
 variable "vnet_integration_enabled" {
-  description = "Allow to enable Vnet integration"
+  description = "Allow to enable Vnet integration."
   type        = bool
   default     = false
+}
+
+variable "subnet_ids" {
+  description = <<EOD
+Subnet IDs of the private network profile of the container.
+Mandatory when VNet integration is enabled.
+EOD
+  type        = list(string)
+  default     = null
 }
 
 variable "dns_name_label" {
