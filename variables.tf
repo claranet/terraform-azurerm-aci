@@ -134,3 +134,9 @@ variable "dns_name_label" {
   type        = string
   default     = null
 }
+
+variable "dns_name_label_reuse_policy" {
+  description = "The value representing the security enum. Noreuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse or Unsecure. Defaults to Unsecure."
+  type        = string
+  default     = "Unsecure"
+}

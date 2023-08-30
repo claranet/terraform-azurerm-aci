@@ -7,7 +7,8 @@ resource "azurerm_container_group" "aci" {
   ip_address_type = var.vnet_integration_enabled ? "Private" : "Public"
   subnet_ids      = var.vnet_integration_enabled ? var.subnet_ids : null
 
-  dns_name_label = var.vnet_integration_enabled ? null : coalesce(var.dns_name_label, local.aci_name)
+  dns_name_label              = var.vnet_integration_enabled ? null : coalesce(var.dns_name_label, local.aci_name)
+  dns_name_label_reuse_policy = var.vnet_integration_enabled ? null : var.dns_name_label_reuse_policy
 
   os_type = var.os_type
 
