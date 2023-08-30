@@ -58,6 +58,37 @@ variable "containers_config" {
       share_name           = optional(string)
       secret               = optional(map(any))
     })), [])
+
+    readiness_probe = optional(object({
+      exec = optional(list(string))
+      http_get = optional(object({
+        path         = optional(string)
+        port         = optional(number)
+        scheme       = optional(string)
+        http_headers = optional(map(string))
+      }))
+      initial_delay_seconds = optional(number)
+      period_seconds        = optional(number)
+      failure_threshold     = optional(number)
+      success_threshold     = optional(number)
+      timeout_seconds       = optional(number)
+    }))
+
+    liveness_probe = optional(object({
+      exec = optional(list(string))
+      http_get = optional(object({
+        path         = optional(string)
+        port         = optional(number)
+        scheme       = optional(string)
+        http_headers = optional(map(string))
+      }))
+      initial_delay_seconds = optional(number)
+      period_seconds        = optional(number)
+      failure_threshold     = optional(number)
+      success_threshold     = optional(number)
+      timeout_seconds       = optional(number)
+    }))
+
   }))
 }
 
