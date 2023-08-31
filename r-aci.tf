@@ -107,5 +107,14 @@ resource "azurerm_container_group" "aci" {
     }
   }
 
+  dynamic "identity" {
+    for_each = try(var.identity[*], [])
+    content {
+      type         = var.identity.type
+      identity_ids = var.identity.identity_ids
+    }
+  }
+
+
   tags = merge(local.default_tags, var.extra_tags)
 }

@@ -140,3 +140,12 @@ variable "dns_name_label_reuse_policy" {
   type        = string
   default     = "Unsecure"
 }
+
+variable "identity" {
+  description = "Map with identity block information."
+  type = object({
+    type         = string
+    identity_ids = optional(list(string))
+  })
+  default = null
+}
