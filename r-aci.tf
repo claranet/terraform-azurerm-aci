@@ -63,7 +63,7 @@ resource "azurerm_container_group" "aci" {
       }
 
       dynamic "readiness_probe" {
-        for_each = try(container.value.readiness_probe[*], [])
+        for_each = !var.vnet_integration_enabled ? try(container.value.readiness_probe[*], []) : []
         content {
           exec = lookup(readiness_probe.value, "exec", null)
           dynamic "http_get" {
@@ -84,7 +84,7 @@ resource "azurerm_container_group" "aci" {
       }
 
       dynamic "liveness_probe" {
-        for_each = try(container.value.liveness_probe[*], [])
+        for_each = !var.vnet_integration_enabled ? try(container.value.liveness_probe[*], []) : []
         content {
           exec = lookup(liveness_probe.value, "exec", null)
           dynamic "http_get" {
