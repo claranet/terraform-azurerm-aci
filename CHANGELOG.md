@@ -1,5 +1,8 @@
 # Unreleased
 
+Breaking
+  * AZ-1153: Remove `retention_days` parameters, it must be handled at destination level now. (for reference: [Provider issue](https://github.com/hashicorp/terraform-provider-azurerm/issues/23051))
+
 Added
   * [GH-5](https://github.com/claranet/terraform-azurerm-aci/pull/5): Add liveness and readiness probes
   * [GH-5](https://github.com/claranet/terraform-azurerm-aci/pull/5): Add DNS name label reuse policy
