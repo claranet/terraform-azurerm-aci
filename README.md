@@ -160,7 +160,7 @@ module "aci" {
 | dns\_name\_label\_reuse\_policy | The value representing the security enum. Noreuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse or Unsecure. Defaults to Unsecure. | `string` | `"Unsecure"` | no |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Container Instances group. | `map(string)` | `{}` | no |
-| identity | Map with identity block information. | <pre>object({<br>    type         = string<br>    identity_ids = optional(list(string))<br>  })</pre> | `null` | no |
+| identity | Map with identity block information. | <pre>object({<br>    type         = optional(string, "SystemAssigned")<br>    identity_ids = optional(list(string))<br>  })</pre> | `{}` | no |
 | location | Azure region to use | `string` | n/a | yes |
 | location\_short | Short string for Azure location | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
@@ -184,6 +184,7 @@ module "aci" {
 |------|-------------|
 | aci\_fqdn | The FQDN of the container group derived from `dns_name_label`. |
 | aci\_id | Azure container instance group ID |
+| aci\_identity\_principal\_id | ACI identity principal ID. |
 | aci\_ip\_address | The IP address allocated to the container instance group. |
 <!-- END_TF_DOCS -->
 

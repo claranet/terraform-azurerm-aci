@@ -144,8 +144,9 @@ variable "dns_name_label_reuse_policy" {
 variable "identity" {
   description = "Map with identity block information."
   type = object({
-    type         = string
+    type         = optional(string, "SystemAssigned")
     identity_ids = optional(list(string))
   })
-  default = null
+  default  = {}
+  nullable = false
 }

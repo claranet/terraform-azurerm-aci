@@ -1,9 +1,9 @@
 # Unreleased
 
 Added
-  * Add Liveness and readiness probes
-  * Add Dns Name Label Reuse Policy
-  * Add Identity Block
+  * [GH-5](https://github.com/claranet/terraform-azurerm-aci/pull/5): Add Liveness and readiness probes
+  * [GH-5](https://github.com/claranet/terraform-azurerm-aci/pull/5): Add DNS Name Label Reuse Policy
+  * [GH-5](https://github.com/claranet/terraform-azurerm-aci/pull/5): Add Identity Block
 
 # v7.3.0 - 2022-12-09
 
