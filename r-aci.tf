@@ -7,7 +7,8 @@ resource "azurerm_container_group" "aci" {
   ip_address_type = var.vnet_integration_enabled ? "Private" : "Public"
   subnet_ids      = var.vnet_integration_enabled ? var.subnet_ids : null
 
-  dns_name_label = var.vnet_integration_enabled ? null : coalesce(var.dns_name_label, local.aci_name)
+  dns_name_label              = var.vnet_integration_enabled ? null : coalesce(var.dns_name_label, local.aci_name)
+  dns_name_label_reuse_policy = var.vnet_integration_enabled ? null : var.dns_name_label_reuse_policy
 
   os_type = var.os_type
 
@@ -60,8 +61,60 @@ resource "azurerm_container_group" "aci" {
           secret               = volume.value.secret
         }
       }
+
+      dynamic "readiness_probe" {
+        for_each = !var.vnet_integration_enabled ? try(container.value.readiness_probe[*], []) : []
+        content {
+          exec = lookup(readiness_probe.value, "exec", null)
+          dynamic "http_get" {
+            for_each = try(readiness_probe.value.http_get[*], [])
+            content {
+              path         = http_get.value.path
+              port         = http_get.value.port
+              scheme       = http_get.value.scheme
+              http_headers = http_get.value.http_headers
+            }
+          }
+          initial_delay_seconds = lookup(readiness_probe.value, "initial_delay_seconds", 0)
+          period_seconds        = lookup(readiness_probe.value, "period_seconds", 10)
+          failure_threshold     = lookup(readiness_probe.value, "failure_threshold", 3)
+          success_threshold     = lookup(readiness_probe.value, "success_threshold", 1)
+          timeout_seconds       = lookup(readiness_probe.value, "timeout_seconds", 1)
+        }
+      }
+
+      dynamic "liveness_probe" {
+        for_each = !var.vnet_integration_enabled ? try(container.value.liveness_probe[*], []) : []
+        content {
+          exec = lookup(liveness_probe.value, "exec", null)
+          dynamic "http_get" {
+            for_each = try(liveness_probe.value.http_get[*], [])
+            content {
+              path         = http_get.value.path
+              port         = http_get.value.port
+              scheme       = http_get.value.scheme
+              http_headers = http_get.value.http_headers
+            }
+          }
+          initial_delay_seconds = lookup(liveness_probe.value, "initial_delay_seconds", 0)
+          period_seconds        = lookup(liveness_probe.value, "period_seconds", 10)
+          failure_threshold     = lookup(liveness_probe.value, "failure_threshold", 3)
+          success_threshold     = lookup(liveness_probe.value, "success_threshold", 1)
+          timeout_seconds       = lookup(liveness_probe.value, "timeout_seconds", 1)
+        }
+      }
+
     }
   }
+
+  dynamic "identity" {
+    for_each = try(var.identity[*], [])
+    content {
+      type         = var.identity.type
+      identity_ids = var.identity.identity_ids
+    }
+  }
+
 
   tags = merge(local.default_tags, var.extra_tags)
 }

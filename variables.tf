@@ -58,6 +58,37 @@ variable "containers_config" {
       share_name           = optional(string)
       secret               = optional(map(any))
     })), [])
+
+    readiness_probe = optional(object({
+      exec = optional(list(string))
+      http_get = optional(object({
+        path         = optional(string)
+        port         = optional(number)
+        scheme       = optional(string)
+        http_headers = optional(map(string))
+      }))
+      initial_delay_seconds = optional(number)
+      period_seconds        = optional(number)
+      failure_threshold     = optional(number)
+      success_threshold     = optional(number)
+      timeout_seconds       = optional(number)
+    }))
+
+    liveness_probe = optional(object({
+      exec = optional(list(string))
+      http_get = optional(object({
+        path         = optional(string)
+        port         = optional(number)
+        scheme       = optional(string)
+        http_headers = optional(map(string))
+      }))
+      initial_delay_seconds = optional(number)
+      period_seconds        = optional(number)
+      failure_threshold     = optional(number)
+      success_threshold     = optional(number)
+      timeout_seconds       = optional(number)
+    }))
+
   }))
 }
 
@@ -102,4 +133,19 @@ variable "dns_name_label" {
   description = "ACI Custom DNS name label used when container is public."
   type        = string
   default     = null
+}
+
+variable "dns_name_label_reuse_policy" {
+  description = "The value representing the security enum. Noreuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse or Unsecure. Defaults to Unsecure."
+  type        = string
+  default     = "Unsecure"
+}
+
+variable "identity" {
+  description = "Map with identity block information."
+  type = object({
+    type         = string
+    identity_ids = optional(list(string))
+  })
+  default = null
 }
