@@ -15,7 +15,7 @@ resource "azurerm_container_group" "aci" {
   restart_policy = var.restart_policy
 
   dynamic "image_registry_credential" {
-    for_each = var.registry_credential != null ? [1] : []
+    for_each = var.registry_credential[*]
 
     content {
       username = var.registry_credential.username
@@ -63,11 +63,11 @@ resource "azurerm_container_group" "aci" {
       }
 
       dynamic "readiness_probe" {
-        for_each = !var.vnet_integration_enabled ? try(container.value.readiness_probe[*], []) : []
+        for_each = !var.vnet_integration_enabled ? container.value.readiness_probe[*] : []
         content {
-          exec = lookup(readiness_probe.value, "exec", null)
+          exec = readiness_probe.value.exec
           dynamic "http_get" {
-            for_each = try(readiness_probe.value.http_get[*], [])
+            for_each = readiness_probe.value.http_get[*]
             content {
               path         = http_get.value.path
               port         = http_get.value.port
@@ -75,20 +75,20 @@ resource "azurerm_container_group" "aci" {
               http_headers = http_get.value.http_headers
             }
           }
-          initial_delay_seconds = lookup(readiness_probe.value, "initial_delay_seconds", 0)
-          period_seconds        = lookup(readiness_probe.value, "period_seconds", 10)
-          failure_threshold     = lookup(readiness_probe.value, "failure_threshold", 3)
-          success_threshold     = lookup(readiness_probe.value, "success_threshold", 1)
-          timeout_seconds       = lookup(readiness_probe.value, "timeout_seconds", 1)
+          initial_delay_seconds = readiness_probe.value.initial_delay_seconds
+          period_seconds        = readiness_probe.value.period_seconds
+          failure_threshold     = readiness_probe.value.failure_threshold
+          success_threshold     = readiness_probe.value.success_threshold
+          timeout_seconds       = readiness_probe.value.timeout_seconds
         }
       }
 
       dynamic "liveness_probe" {
-        for_each = !var.vnet_integration_enabled ? try(container.value.liveness_probe[*], []) : []
+        for_each = !var.vnet_integration_enabled ? container.value.liveness_probe[*] : []
         content {
-          exec = lookup(liveness_probe.value, "exec", null)
+          exec = liveness_probe.value.exec
           dynamic "http_get" {
-            for_each = try(liveness_probe.value.http_get[*], [])
+            for_each = liveness_probe.value.http_get[*]
             content {
               path         = http_get.value.path
               port         = http_get.value.port
@@ -96,14 +96,13 @@ resource "azurerm_container_group" "aci" {
               http_headers = http_get.value.http_headers
             }
           }
-          initial_delay_seconds = lookup(liveness_probe.value, "initial_delay_seconds", 0)
-          period_seconds        = lookup(liveness_probe.value, "period_seconds", 10)
-          failure_threshold     = lookup(liveness_probe.value, "failure_threshold", 3)
-          success_threshold     = lookup(liveness_probe.value, "success_threshold", 1)
-          timeout_seconds       = lookup(liveness_probe.value, "timeout_seconds", 1)
+          initial_delay_seconds = liveness_probe.value.initial_delay_seconds
+          period_seconds        = liveness_probe.value.period_seconds
+          failure_threshold     = liveness_probe.value.failure_threshold
+          success_threshold     = liveness_probe.value.success_threshold
+          timeout_seconds       = liveness_probe.value.timeout_seconds
         }
       }
-
     }
   }
 
