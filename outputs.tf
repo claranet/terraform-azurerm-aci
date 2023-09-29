@@ -12,3 +12,8 @@ output "aci_fqdn" {
   value       = azurerm_container_group.aci.fqdn
   description = "The FQDN of the container group derived from `dns_name_label`."
 }
+
+output "aci_identity_principal_id" {
+  description = "ACI identity principal ID."
+  value       = one(azurerm_container_group.aci.identity[*].principal_id)
+}
