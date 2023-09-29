@@ -161,6 +161,7 @@ module "aci" {
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Container Instances group. | `map(string)` | `{}` | no |
 | identity | Map with identity block information. | <pre>object({<br>    type         = optional(string, "SystemAssigned")<br>    identity_ids = optional(list(string))<br>  })</pre> | `{}` | no |
+| init\_containers | initContainer configuration. | <pre>list(object({<br>    name                         = string<br>    image                        = string<br>    environment_variables        = optional(map(string), {})<br>    secure_environment_variables = optional(map(string), {})<br>    commands                     = optional(list(string), [])<br>    volume = optional(list(object({<br>      name                 = string<br>      mount_path           = string<br>      read_only            = optional(bool)<br>      empty_dir            = optional(bool)<br>      storage_account_name = optional(string)<br>      storage_account_key  = optional(string)<br>      share_name           = optional(string)<br>      secret               = optional(map(any))<br>    })), [])<br>    security = optional(object({<br>      privilege_enabled = bool<br>    }), null)<br>  }))</pre> | `[]` | no |
 | location | Azure region to use | `string` | n/a | yes |
 | location\_short | Short string for Azure location | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |

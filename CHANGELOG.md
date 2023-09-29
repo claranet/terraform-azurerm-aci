@@ -7,6 +7,7 @@ Added
   * [GH-5](https://github.com/claranet/terraform-azurerm-aci/pull/5): Add liveness and readiness probes
   * [GH-5](https://github.com/claranet/terraform-azurerm-aci/pull/5): Add DNS name label reuse policy
   * [GH-5](https://github.com/claranet/terraform-azurerm-aci/pull/5): Add identity block
+  * AZ-1194: Add init_containers block
 
 # v7.3.0 - 2022-12-09
 
