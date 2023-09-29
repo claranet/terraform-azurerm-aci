@@ -25,7 +25,7 @@ resource "azurerm_container_group" "aci" {
   }
 
   dynamic "init_container" {
-    for_each = var.init_containers[*]
+    for_each = var.init_containers
     content {
       name = init_container.value.name
 
