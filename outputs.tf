@@ -15,5 +15,5 @@ output "aci_fqdn" {
 
 output "aci_identity_principal_id" {
   description = "ACI identity principal ID."
-  value       = try(azurerm_container_group.aci.identity[0].principal_id, null)
+  value       = one(azurerm_container_group.aci.identity[*].principal_id)
 }
