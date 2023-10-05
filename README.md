@@ -156,6 +156,7 @@ module "aci" {
 | custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | custom\_name | Custom Azure Container Instances group name, generated if not set | `string` | `""` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
+| dns\_config | DNS configuration to apply to containers. | <pre>object({<br>    nameservers    = list(string)<br>    search_domains = optional(list(string))<br>    options        = optional(list(string))<br>  })</pre> | `null` | no |
 | dns\_name\_label | ACI Custom DNS name label used when container is public. | `string` | `null` | no |
 | dns\_name\_label\_reuse\_policy | The value representing the security enum. Noreuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse or Unsecure. Defaults to Unsecure. | `string` | `"Unsecure"` | no |
 | environment | Project environment | `string` | n/a | yes |

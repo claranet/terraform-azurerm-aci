@@ -176,3 +176,13 @@ variable "init_containers" {
   default  = []
   nullable = false
 }
+
+variable "dns_config" {
+  description = "DNS configuration to apply to containers."
+  type = object({
+    nameservers    = list(string)
+    search_domains = optional(list(string))
+    options        = optional(list(string))
+  })
+  default = null
+}

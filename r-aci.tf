@@ -24,6 +24,16 @@ resource "azurerm_container_group" "aci" {
     }
   }
 
+  dynamic "dns_config" {
+    for_each = var.dns_config[*]
+    content {
+      nameservers    = dns_config.value.nameservers
+      search_domains = dns_config.value.search_domains
+      options        = dns_config.value.options
+
+    }
+  }
+
   dynamic "init_container" {
     for_each = var.init_containers
     content {
