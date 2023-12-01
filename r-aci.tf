@@ -24,6 +24,49 @@ resource "azurerm_container_group" "aci" {
     }
   }
 
+  dynamic "dns_config" {
+    for_each = var.dns_config[*]
+    content {
+      nameservers    = dns_config.value.nameservers
+      search_domains = dns_config.value.search_domains
+      options        = dns_config.value.options
+
+    }
+  }
+
+  dynamic "init_container" {
+    for_each = var.init_containers
+    content {
+      name = init_container.value.name
+
+      image                        = init_container.value.image
+      environment_variables        = init_container.value.environment_variables
+      secure_environment_variables = init_container.value.secure_environment_variables
+      commands                     = init_container.value.commands
+
+      dynamic "volume" {
+        for_each = init_container.value.volume
+        content {
+          name                 = volume.value.name
+          mount_path           = volume.value.mount_path
+          read_only            = volume.value.read_only
+          empty_dir            = volume.value.empty_dir
+          storage_account_name = volume.value.storage_account_name
+          storage_account_key  = volume.value.storage_account_key
+          share_name           = volume.value.share_name
+          secret               = volume.value.secret
+        }
+      }
+
+      dynamic "security" {
+        for_each = init_container.value.security[*]
+        content {
+          privilege_enabled = security.value.privilege_enabled
+        }
+      }
+    }
+  }
+
   dynamic "container" {
     for_each = var.containers_config
 

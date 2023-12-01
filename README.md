@@ -132,7 +132,7 @@ module "aci" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.2, >= 1.2.22 |
-| azurerm | ~> 3.39 |
+| azurerm | ~> 3.71 |
 
 ## Modules
 
@@ -156,11 +156,13 @@ module "aci" {
 | custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | custom\_name | Custom Azure Container Instances group name, generated if not set | `string` | `""` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
+| dns\_config | DNS configuration to apply to containers. | <pre>object({<br>    nameservers    = list(string)<br>    search_domains = optional(list(string))<br>    options        = optional(list(string))<br>  })</pre> | `null` | no |
 | dns\_name\_label | ACI Custom DNS name label used when container is public. | `string` | `null` | no |
 | dns\_name\_label\_reuse\_policy | The value representing the security enum. Noreuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse or Unsecure. Defaults to Unsecure. | `string` | `"Unsecure"` | no |
 | environment | Project environment | `string` | n/a | yes |
 | extra\_tags | Additional tags to associate with your Azure Container Instances group. | `map(string)` | `{}` | no |
 | identity | Map with identity block information. | <pre>object({<br>    type         = optional(string, "SystemAssigned")<br>    identity_ids = optional(list(string))<br>  })</pre> | `{}` | no |
+| init\_containers | initContainer configuration. | <pre>list(object({<br>    name                         = string<br>    image                        = string<br>    environment_variables        = optional(map(string), {})<br>    secure_environment_variables = optional(map(string), {})<br>    commands                     = optional(list(string), [])<br>    volume = optional(list(object({<br>      name                 = string<br>      mount_path           = string<br>      read_only            = optional(bool)<br>      empty_dir            = optional(bool)<br>      storage_account_name = optional(string)<br>      storage_account_key  = optional(string)<br>      share_name           = optional(string)<br>      secret               = optional(map(any))<br>    })), [])<br>    security = optional(object({<br>      privilege_enabled = bool<br>    }), null)<br>  }))</pre> | `[]` | no |
 | location | Azure region to use | `string` | n/a | yes |
 | location\_short | Short string for Azure location | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |

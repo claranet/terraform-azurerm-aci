@@ -150,3 +150,39 @@ variable "identity" {
   default  = {}
   nullable = false
 }
+
+variable "init_containers" {
+  description = "initContainer configuration."
+  type = list(object({
+    name                         = string
+    image                        = string
+    environment_variables        = optional(map(string), {})
+    secure_environment_variables = optional(map(string), {})
+    commands                     = optional(list(string), [])
+    volume = optional(list(object({
+      name                 = string
+      mount_path           = string
+      read_only            = optional(bool)
+      empty_dir            = optional(bool)
+      storage_account_name = optional(string)
+      storage_account_key  = optional(string)
+      share_name           = optional(string)
+      secret               = optional(map(any))
+    })), [])
+    security = optional(object({
+      privilege_enabled = bool
+    }), null)
+  }))
+  default  = []
+  nullable = false
+}
+
+variable "dns_config" {
+  description = "DNS configuration to apply to containers."
+  type = object({
+    nameservers    = list(string)
+    search_domains = optional(list(string))
+    options        = optional(list(string))
+  })
+  default = null
+}

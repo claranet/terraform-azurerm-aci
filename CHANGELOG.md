@@ -1,3 +1,9 @@
+# Unreleased
+
+Added
+  * AZ-1194: Add init_containers block
+  * AZ-1201: Add dns_config block
+
 # v7.4.0 - 2023-09-29
 
 Breaking
