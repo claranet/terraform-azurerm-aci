@@ -1,4 +1,4 @@
-# Unreleased
+# v7.5.0 - 2023-12-01
 
 Added
   * AZ-1194: Add init_containers block
