@@ -1,3 +1,8 @@
+# Unreleased
+
+Changed
+  * AZ-1339: Remove Terraform version restriction
+
 # v7.5.0 - 2023-12-01
 
 Added
