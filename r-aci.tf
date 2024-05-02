@@ -1,4 +1,4 @@
-resource "azurerm_container_group" "aci" {
+resource "azurerm_container_group" "main" {
   name = local.aci_name
 
   location            = var.location
@@ -159,4 +159,9 @@ resource "azurerm_container_group" "aci" {
   }
 
   tags = merge(local.default_tags, var.extra_tags)
+}
+
+moved {
+  from = azurerm_container_group.aci
+  to   = azurerm_container_group.main
 }

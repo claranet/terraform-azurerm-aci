@@ -1,31 +1,31 @@
 #### Common variables
 variable "resource_group_name" {
-  description = "Name of the resource group"
+  description = "Name of the resource group."
   type        = string
 }
 
 variable "location" {
-  description = "Azure region to use"
+  description = "Azure region to use."
   type        = string
 }
 
 variable "location_short" {
-  description = "Short string for Azure location"
+  description = "Short string for Azure location."
   type        = string
 }
 
 variable "environment" {
-  description = "Project environment"
+  description = "Project environment."
   type        = string
 }
 
 variable "stack" {
-  description = "Project stack name"
+  description = "Project stack name."
   type        = string
 }
 
 variable "client_name" {
-  description = "Client name/account used in naming"
+  description = "Client name/account used in naming."
   type        = string
 }
 
@@ -93,7 +93,7 @@ variable "containers_config" {
 }
 
 variable "registry_credential" {
-  description = "A registry_credential object as documented below. Changing this forces a new resource to be created."
+  description = "A `registry_credential` object as documented below. Changing this forces a new resource to be created."
   type = object({
     username                  = string
     password                  = string
@@ -104,7 +104,7 @@ variable "registry_credential" {
 }
 
 variable "os_type" {
-  description = "The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created."
+  description = "The OS for the container group. Allowed values are `Linux` and `Windows`. Changing this forces a new resource to be created."
   type        = string
   default     = "Linux"
 }
@@ -116,7 +116,7 @@ variable "restart_policy" {
 }
 
 variable "vnet_integration_enabled" {
-  description = "Allow to enable Vnet integration."
+  description = "Allow to enable VNet integration."
   type        = bool
   default     = false
 }
@@ -131,13 +131,13 @@ EOD
 }
 
 variable "dns_name_label" {
-  description = "ACI Custom DNS name label used when container is public."
+  description = "ACI custom DNS name label used when container is public."
   type        = string
   default     = null
 }
 
 variable "dns_name_label_reuse_policy" {
-  description = "The value representing the security enum. Noreuse, ResourceGroupReuse, SubscriptionReuse, TenantReuse or Unsecure. Defaults to Unsecure."
+  description = "The value representing the security enum. Possible values are: `Noreuse`, `ResourceGroupReuse`, `SubscriptionReuse`, `TenantReuse` or `Unsecure`. Defaults to `Unsecure`."
   type        = string
   default     = "Unsecure"
 }
