@@ -171,7 +171,7 @@ module "aci" {
 | name\_prefix | Optional prefix for the generated name | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name | `string` | `""` | no |
 | os\_type | The OS for the container group. Allowed values are Linux and Windows. Changing this forces a new resource to be created. | `string` | `"Linux"` | no |
-| registry\_credential | A registry\_credential object as documented below. Changing this forces a new resource to be created. | <pre>object({<br/>    username = string<br/>    password = string<br/>    server   = string<br/>  })</pre> | `null` | no |
+| registry\_credential | A registry\_credential object as documented below. Changing this forces a new resource to be created. | <pre>object({<br/>    username                  = string<br/>    password                  = string<br/>    server                    = string<br/>    user_assigned_identity_id = optional(string)<br/>  })</pre> | `null` | no |
 | resource\_group\_name | Name of the resource group | `string` | n/a | yes |
 | restart\_policy | Restart policy for the container group. Allowed values are `Always`, `Never`, `OnFailure`. Changing this forces a new resource to be created. | `string` | `"Always"` | no |
 | stack | Project stack name | `string` | n/a | yes |
