@@ -95,9 +95,10 @@ variable "containers_config" {
 variable "registry_credential" {
   description = "A registry_credential object as documented below. Changing this forces a new resource to be created."
   type = object({
-    username = string
-    password = string
-    server   = string
+    username                  = string
+    password                  = string
+    server                    = string
+    user_assigned_identity_id = optional(string)
   })
   default = null
 }

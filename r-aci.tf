@@ -18,9 +18,10 @@ resource "azurerm_container_group" "aci" {
     for_each = var.registry_credential[*]
 
     content {
-      username = var.registry_credential.username
-      password = var.registry_credential.password
-      server   = var.registry_credential.server
+      username                  = var.registry_credential.username
+      password                  = var.registry_credential.password
+      server                    = var.registry_credential.server
+      user_assigned_identity_id = var.registry_credential.user_assigned_identity_id
     }
   }
 
