@@ -1,3 +1,16 @@
+## 7.7.0 (2024-10-04)
+
+### Features
+
+* **AZ-1458:** add `user_assigned_identity` option to `registry_credential` input 8a4de85
+
+### Miscellaneous Chores
+
+* **deps:** update dependency claranet/diagnostic-settings/azurerm to v7 f3b22e8
+* **deps:** update dependency opentofu to v1.8.3 25791bc
+* **deps:** update dependency trivy to v0.56.0 c3c109d
+* **deps:** update dependency trivy to v0.56.1 3f14554
+
 ## 7.6.0 (2024-10-03)
 
 ### Features
