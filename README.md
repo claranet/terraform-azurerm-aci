@@ -40,12 +40,12 @@ module "acr" {
 
   location            = module.azure_region.location
   location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
-  sku                 = "Standard"
+  resource_group_name = module.rg.name
+  client_name         = var.client_name
+  environment         = var.environment
+  stack               = var.stack
 
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
+  sku = "Standard"
 
   logs_destinations_ids = [
     module.logs.logs_storage_account_id,
@@ -61,13 +61,12 @@ module "aci" {
   source  = "claranet/aci/azurerm"
   version = "x.x.x"
 
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  client_name    = var.client_name
-  environment    = var.environment
-  stack          = var.stack
-
-  resource_group_name = module.rg.resource_group_name
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
+  client_name         = var.client_name
+  environment         = var.environment
+  stack               = var.stack
+  resource_group_name = module.rg.name
 
   restart_policy = "OnFailure"
 
@@ -108,14 +107,14 @@ module "aci" {
 
 | Name | Version |
 |------|---------|
-| azurecaf | ~> 1.2, >= 1.2.22 |
-| azurerm | ~> 3.71 |
+| azurecaf | ~> 1.2.28 |
+| azurerm | ~> 4.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
+| diagnostics | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
 
 ## Resources
 
@@ -160,12 +159,12 @@ module "aci" {
 | Name | Description |
 |------|-------------|
 | fqdn | The FQDN of the container group derived from `dns_name_label`. |
-| id | Azure container instance group ID |
+| id | Azure Container Instance ID. |
 | identity\_principal\_id | ACI identity principal ID. |
 | ip\_address | The IP address allocated to the container instance group. |
-| module\_diagnostics | Diagnostics Settings output. |
-| name | Azure container instance group name |
-| resource | Resource output. |
+| module\_diagnostics | Diagnostics module output. |
+| name | Azure Container Instance name. |
+| resource | Azure Container Instance resource object. |
 <!-- END_TF_DOCS -->
 
 ## Related documentation
