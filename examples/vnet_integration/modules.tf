@@ -54,8 +54,8 @@ module "acr" {
   sku = "Premium"
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.logs.id,
+    module.logs.storage_account_id
   ]
 
   extra_tags = {
@@ -77,7 +77,7 @@ module "aci" {
   restart_policy = "OnFailure"
 
   vnet_integration_enabled = true
-  subnet_ids               = [module.subnet.subnet_id]
+  subnet_ids               = [module.subnet.id]
 
   containers_config = [
     {
@@ -102,8 +102,8 @@ module "aci" {
   }
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.logs.id,
+    module.logs.storage_account_id
   ]
 
   extra_tags = {

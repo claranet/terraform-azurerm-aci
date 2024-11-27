@@ -12,8 +12,8 @@ module "acr" {
   sku = "Standard"
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.logs.id,
+    module.logs.storage_account_id
   ]
 
   extra_tags = {
@@ -57,8 +57,8 @@ module "aci" {
   }
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.logs.id,
+    module.logs.storage_account_id
   ]
 
   extra_tags = {

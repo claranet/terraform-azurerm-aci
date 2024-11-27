@@ -93,7 +93,7 @@ variable "containers_config" {
 }
 
 variable "registry_credential" {
-  description = "A `registry_credential` object as documented below. Changing this forces a new resource to be created."
+  description = "A `registry_credential` object as documented below."
   type = object({
     username                  = string
     password                  = string
@@ -104,13 +104,13 @@ variable "registry_credential" {
 }
 
 variable "os_type" {
-  description = "The OS for the container group. Allowed values are `Linux` and `Windows`. Changing this forces a new resource to be created."
+  description = "The OS for the container group. Allowed values are `Linux` and `Windows`."
   type        = string
   default     = "Linux"
 }
 
 variable "restart_policy" {
-  description = "Restart policy for the container group. Allowed values are `Always`, `Never`, `OnFailure`. Changing this forces a new resource to be created."
+  description = "Restart policy for the container group. Allowed values are `Always`, `Never`, `OnFailure`."
   type        = string
   default     = "Always"
 }

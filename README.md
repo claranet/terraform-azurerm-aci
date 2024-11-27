@@ -48,8 +48,8 @@ module "acr" {
   sku = "Standard"
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.logs.id,
+    module.logs.storage_account_id
   ]
 
   extra_tags = {
@@ -93,8 +93,8 @@ module "aci" {
   }
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.logs.id,
+    module.logs.storage_account_id
   ]
 
   extra_tags = {
@@ -142,14 +142,14 @@ module "aci" {
 | location | Azure region to use. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
-| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br/>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br/>If you want to specify an Azure EventHub to send logs and metrics to, you need to provide a formatted string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the `|` character. | `list(string)` | n/a | yes |
+| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br/>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br/>If you want to use Azure EventHub as a destination, you must provide a formatted string containing both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the <code>&#124;</code> character. | `list(string)` | n/a | yes |
 | logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | name\_prefix | Optional prefix for the generated name. | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name. | `string` | `""` | no |
-| os\_type | The OS for the container group. Allowed values are `Linux` and `Windows`. Changing this forces a new resource to be created. | `string` | `"Linux"` | no |
-| registry\_credential | A `registry_credential` object as documented below. Changing this forces a new resource to be created. | <pre>object({<br/>    username                  = string<br/>    password                  = string<br/>    server                    = string<br/>    user_assigned_identity_id = optional(string)<br/>  })</pre> | `null` | no |
+| os\_type | The OS for the container group. Allowed values are `Linux` and `Windows`. | `string` | `"Linux"` | no |
+| registry\_credential | A `registry_credential` object as documented below. | <pre>object({<br/>    username                  = string<br/>    password                  = string<br/>    server                    = string<br/>    user_assigned_identity_id = optional(string)<br/>  })</pre> | `null` | no |
 | resource\_group\_name | Name of the resource group. | `string` | n/a | yes |
-| restart\_policy | Restart policy for the container group. Allowed values are `Always`, `Never`, `OnFailure`. Changing this forces a new resource to be created. | `string` | `"Always"` | no |
+| restart\_policy | Restart policy for the container group. Allowed values are `Always`, `Never`, `OnFailure`. | `string` | `"Always"` | no |
 | stack | Project stack name. | `string` | n/a | yes |
 | subnet\_ids | Subnet IDs of the private network profile of the container.<br/>Mandatory when VNet integration is enabled. | `list(string)` | `null` | no |
 | vnet\_integration\_enabled | Allow to enable VNet integration. | `bool` | `false` | no |
