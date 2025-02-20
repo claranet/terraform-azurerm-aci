@@ -24,7 +24,7 @@ module "subnet" {
   location_short      = module.azure_region.location_short
   client_name         = var.client_name
   stack               = var.stack
-  resource_group_name = module.rg.resource_group_name
+  resource_group_name = module.rg.name
 
   virtual_network_name = module.vnet.name
 
