@@ -1,3 +1,48 @@
+## 8.0.0 (2025-02-28)
+
+### ⚠ BREAKING CHANGES
+
+* **AZ-1088:** module standardization
+
+### Features
+
+* **AZ-1088:** module v8 be319b2
+* **AZ-1088:** rework module fec2ae8
+
+### Documentation
+
+* fix example 6e614dc
+
+### Miscellaneous Chores
+
+* **AZ-1088:** apply suggestions fb859c6
+* **deps:** update dependency opentofu to v1.8.4 952473c
+* **deps:** update dependency opentofu to v1.8.6 9cfaddf
+* **deps:** update dependency opentofu to v1.8.8 758d180
+* **deps:** update dependency opentofu to v1.9.0 edc7963
+* **deps:** update dependency pre-commit to v4 aff6fe4
+* **deps:** update dependency pre-commit to v4.0.1 c7127e1
+* **deps:** update dependency pre-commit to v4.1.0 e1635e9
+* **deps:** update dependency tflint to v0.54.0 a864c8d
+* **deps:** update dependency tflint to v0.55.0 6da8d3a
+* **deps:** update dependency trivy to v0.56.2 41d47f6
+* **deps:** update dependency trivy to v0.57.1 4ea1259
+* **deps:** update dependency trivy to v0.58.1 2aff259
+* **deps:** update dependency trivy to v0.58.2 7249310
+* **deps:** update dependency trivy to v0.59.1 8da3425
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.19.0 ac6dd98
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.20.0 ff61d33
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.21.0 6157410
+* **deps:** update pre-commit hook pre-commit/pre-commit-hooks to v5 23bbd0b
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.1.0 568e1c1
+* **deps:** update tools 9aceab2
+* **deps:** update tools ae8bcbc
+* **deps:** update tools 3b53e67
+* prepare for new examples structure 3f461b3
+* update examples structure bc81c31
+* update Github templates d769c9a
+* update tflint config for v0.55.0 927c727
+
 ## 7.7.0 (2024-10-04)
 
 ### Features
