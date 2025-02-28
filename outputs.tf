@@ -1,19 +1,34 @@
-output "aci_id" {
-  value       = azurerm_container_group.aci.id
-  description = "Azure container instance group ID"
+output "id" {
+  description = "Azure Container Instance ID."
+  value       = azurerm_container_group.main.id
 }
 
-output "aci_ip_address" {
-  value       = azurerm_container_group.aci.ip_address
+output "resource" {
+  description = "Azure Container Instance resource object."
+  value       = azurerm_container_group.main
+}
+
+output "name" {
+  description = "Azure Container Instance name."
+  value       = local.name
+}
+
+output "module_diagnostics" {
+  description = "Diagnostics module output."
+  value       = module.diagnostics
+}
+
+output "ip_address" {
   description = "The IP address allocated to the container instance group."
+  value       = azurerm_container_group.main.ip_address
 }
 
-output "aci_fqdn" {
-  value       = azurerm_container_group.aci.fqdn
+output "fqdn" {
   description = "The FQDN of the container group derived from `dns_name_label`."
+  value       = azurerm_container_group.main.fqdn
 }
 
-output "aci_identity_principal_id" {
+output "identity_principal_id" {
   description = "ACI identity principal ID."
-  value       = one(azurerm_container_group.aci.identity[*].principal_id)
+  value       = one(azurerm_container_group.main.identity[*].principal_id)
 }

@@ -14,6 +14,7 @@ module "rg" {
   client_name    = var.client_name
   environment    = var.environment
   stack          = var.stack
+
 }
 
 module "logs" {

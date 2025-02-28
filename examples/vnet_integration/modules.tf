@@ -2,53 +2,35 @@ locals {
   vnet_cidr_list = ["10.10.0.0/16"]
 }
 
-module "azure_region" {
-  source  = "claranet/regions/azurerm"
-  version = "x.x.x"
-
-  azure_region = var.azure_region
-}
-
-module "rg" {
-  source  = "claranet/rg/azurerm"
-  version = "x.x.x"
-
-  location    = module.azure_region.location
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
-
-}
-
 module "vnet" {
   source  = "claranet/vnet/azurerm"
   version = "x.x.x"
 
-  environment    = var.environment
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  client_name    = var.client_name
-  stack          = var.stack
+  environment         = var.environment
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
+  client_name         = var.client_name
+  stack               = var.stack
+  resource_group_name = module.rg.name
 
-  resource_group_name = module.rg.resource_group_name
-  vnet_cidr           = local.vnet_cidr_list
+  cidrs = local.vnet_cidr_list
 }
 
 module "subnet" {
   source  = "claranet/subnet/azurerm"
   version = "x.x.x"
 
-  environment    = var.environment
-  location_short = module.azure_region.location_short
-  client_name    = var.client_name
-  stack          = var.stack
+  environment         = var.environment
+  location_short      = module.azure_region.location_short
+  client_name         = var.client_name
+  stack               = var.stack
+  resource_group_name = module.rg.name
 
-  resource_group_name  = module.rg.resource_group_name
-  virtual_network_name = module.vnet.virtual_network_name
+  virtual_network_name = module.vnet.name
 
-  subnet_cidr_list = ["10.10.11.0/24"]
+  cidrs = ["10.10.11.0/24"]
 
-  subnet_delegation = {
+  delegations = {
     "Microsoft.ContainerInstance.containerGroups" = [
       {
         name    = "Microsoft.ContainerInstance/containerGroups"
@@ -58,34 +40,22 @@ module "subnet" {
   }
 }
 
-module "logs" {
-  source  = "claranet/run/azurerm//modules/logs"
-  version = "x.x.x"
-
-  client_name         = var.client_name
-  environment         = var.environment
-  stack               = var.stack
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
-}
-
 module "acr" {
   source  = "claranet/acr/azurerm"
   version = "x.x.x"
 
   location            = module.azure_region.location
   location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
-  sku                 = "Premium"
+  client_name         = var.client_name
+  environment         = var.environment
+  stack               = var.stack
+  resource_group_name = module.rg.name
 
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
+  sku = "Premium"
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.logs.id,
+    module.logs.storage_account_id
   ]
 
   extra_tags = {
@@ -97,18 +67,17 @@ module "aci" {
   source  = "claranet/aci/azurerm"
   version = "x.x.x"
 
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  client_name    = var.client_name
-  environment    = var.environment
-  stack          = var.stack
-
-  resource_group_name = module.rg.resource_group_name
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
+  client_name         = var.client_name
+  environment         = var.environment
+  stack               = var.stack
+  resource_group_name = module.rg.name
 
   restart_policy = "OnFailure"
 
   vnet_integration_enabled = true
-  subnet_ids               = [module.subnet.subnet_id]
+  subnet_ids               = [module.subnet.id]
 
   containers_config = [
     {
@@ -117,10 +86,12 @@ module "aci" {
       cpu    = 1
       memory = 2
 
-      ports = [{
-        port     = 80
-        protocol = "TCP"
-      }]
+      ports = [
+        {
+          port     = 80
+          protocol = "TCP"
+        }
+      ]
     }
   ]
 
@@ -131,8 +102,8 @@ module "aci" {
   }
 
   logs_destinations_ids = [
-    module.logs.logs_storage_account_id,
-    module.logs.log_analytics_workspace_id
+    module.logs.id,
+    module.logs.storage_account_id
   ]
 
   extra_tags = {
