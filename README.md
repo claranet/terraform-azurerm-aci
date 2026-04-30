@@ -106,27 +106,27 @@ module "aci" {
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azurecaf | >= 1.2.28 |
 | azurerm | ~> 4.31 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | diagnostics | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_container_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_group) | resource |
 | [azurecaf_name.aci](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | containers\_config | Containers configurations. | <pre>list(object({<br/>    name = string<br/><br/>    image  = string<br/>    cpu    = number<br/>    memory = number<br/><br/>    environment_variables        = optional(map(string))<br/>    secure_environment_variables = optional(map(string))<br/>    commands                     = optional(list(string))<br/><br/>    ports = list(object({<br/>      port     = number<br/>      protocol = string<br/>    }))<br/><br/>    volume = optional(list(object({<br/>      name                 = string<br/>      mount_path           = string<br/>      read_only            = optional(bool)<br/>      empty_dir            = optional(bool)<br/>      storage_account_name = optional(string)<br/>      storage_account_key  = optional(string)<br/>      share_name           = optional(string)<br/>      secret               = optional(map(any))<br/>    })), [])<br/><br/>    readiness_probe = optional(object({<br/>      exec = optional(list(string))<br/>      http_get = optional(object({<br/>        path         = optional(string)<br/>        port         = optional(number)<br/>        scheme       = optional(string)<br/>        http_headers = optional(map(string))<br/>      }))<br/>      initial_delay_seconds = optional(number)<br/>      period_seconds        = optional(number)<br/>      failure_threshold     = optional(number)<br/>      success_threshold     = optional(number)<br/>      timeout_seconds       = optional(number)<br/>    }))<br/><br/>    liveness_probe = optional(object({<br/>      exec = optional(list(string))<br/>      http_get = optional(object({<br/>        path         = optional(string)<br/>        port         = optional(number)<br/>        scheme       = optional(string)<br/>        http_headers = optional(map(string))<br/>      }))<br/>      initial_delay_seconds = optional(number)<br/>      period_seconds        = optional(number)<br/>      failure_threshold     = optional(number)<br/>      success_threshold     = optional(number)<br/>      timeout_seconds       = optional(number)<br/>    }))<br/><br/>  }))</pre> | n/a | yes |
 | custom\_name | Custom Azure Container Instances group name, generated if not set. | `string` | `""` | no |
@@ -157,7 +157,7 @@ module "aci" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | fqdn | The FQDN of the container group derived from `dns_name_label`. |
 | id | Azure Container Instance ID. |
 | identity\_principal\_id | ACI identity principal ID. |
