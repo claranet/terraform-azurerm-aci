@@ -6,6 +6,7 @@ output "id" {
 output "resource" {
   description = "Azure Container Instance resource object."
   value       = azurerm_container_group.main
+  sensitive   = true
 }
 
 output "name" {
