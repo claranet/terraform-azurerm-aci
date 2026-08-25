@@ -1,3 +1,25 @@
+## 9.0.0 (2026-08-25)
+
+### ⚠ BREAKING CHANGES
+
+* **SREAA-368:** minimum OpenTofu version raised to 1.12, AzureRM provider
+minimum raised to 5.0, diagnostic-settings module minimum raised to 9.0.
+
+### Features
+
+* **SREAA-368:** upgrade module to v9 (OpenTofu >= 1.12, AzureRM ~> 5.0) 373ec83
+
+### Bug Fixes
+
+* **SREAA-368:** align v9 branch with current pipeline and provider constraints b08ceda
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.12.5 5a0594f
+* **deps:** update dependency tflint to v0.64.0 9d06124
+* **SREAA-368:** synchronize committed.toml and AGENTS.md from the ci template 1e130d5
+* **v9:** 🐛 synchronize common files and docs fd47f12
+
 ## 8.0.5 (2026-07-20)
 
 ### Bug Fixes
